@@ -4,10 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/themebtn.css" />
+    <link rel="stylesheet" href="/css/loginui.css" />
     <title>CSC Clipboard</title>
   </head>
   <body>
     <div id="theme-btn">
+      <div class="auth-container">
+        <% if (typeof user !== 'undefined' && user) {%>
+        <button
+          class="auth-button text-theme"
+          role="button"
+          style="text-align: center"
+          id="LogoutButton"
+        >
+          LOGOUT
+        </button>
+        <% } else { %>
+        <button
+          class="auth-button text-theme"
+          role="button"
+          style="text-align: center"
+          id="authButton"
+        >
+          LOGIN
+        </button>
+        <% } %>
+      </div>
       <div class="theme_container">
         <div class="theme_indicator">
           <div class="theme_icon-container">
@@ -16,6 +38,144 @@
         </div>
       </div>
     </div>
+    <% if (typeof registering !== 'undefined' && registering) { %>
+    <div id="login-container" class="show">
+      <div id="login-title" class="text-theme">
+        <p1>REGISTER</p1>
+      </div>
+      <div id="register-form">
+        <form action="/register" method="POST">
+          <div id="username-input">
+            <label for="username-field" class="text-theme transition-theme"
+              >Username</label
+            >
+            <input
+              id="username-field"
+              class="inputformcode placeholdercolor"
+              name="username"
+            />
+          </div>
+
+          <div id="password-input">
+            <label for="password-field" class="text-theme transition-theme"
+              >Password</label
+            >
+            <input
+              id="password-field"
+              class="inputformcode placeholdercolor"
+              name="password"
+              type="password"
+            />
+          </div>
+
+          <div id="cpassword-input">
+            <label for="cpassword-field" class="text-theme transition-theme"
+              >Confirm Password</label
+            >
+            <input
+              id="cpassword-field"
+              class="inputformcode placeholdercolor"
+              name="password"
+              type="password"
+            />
+          </div>
+
+          <div id="login-button">
+            <button
+              id="loginToButton"
+              class="button-24"
+              role="button"
+              style="text-align: center"
+              type="button"
+            >
+              LOGIN
+            </button>
+            <button
+              class="button-24"
+              role="button"
+              style="text-align: center"
+              type="submit"
+            >
+              REGISTER
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <% } else { %>
+    <div
+      id="login-container"
+      class="hidden <%= typeof logining !== 'undefined' && logining ? 'show' : '' %>"
+    >
+      <div id="login-title" class="text-theme">
+        <p1>LOGIN</p1>
+      </div>
+      <div id="login-form">
+        <form action="/login" method="POST">
+          <div id="username-input">
+            <label for="username-field" class="text-theme transition-theme"
+              >Username</label
+            >
+            <input
+              id="username-field"
+              class="inputformcode placeholdercolor"
+              name="username"
+            />
+          </div>
+
+          <div id="password-input">
+            <label for="password-field" class="text-theme transition-theme"
+              >Password</label
+            >
+            <input
+              id="password-field"
+              class="inputformcode placeholdercolor"
+              name="password"
+              type="password"
+            />
+          </div>
+
+          <div id="remember-me">
+            <input id="remember-me-checkbox" name="remember" type="checkbox" />
+            <label
+              for="remember-me-checkbox"
+              class="text-theme transition-theme"
+              >Remember Me</label
+            >
+          </div>
+
+          <% if (typeof loginerror !== 'undefined' && loginerror) { %>
+          <div
+            id="login-error"
+            class="text-theme"
+            style="margin-left: 3vh; margin-bottom: 2vh"
+          >
+            <p1 style="color: #ff0000"><%= loginerror %></p1>
+          </div>
+          <% } %>
+
+          <div id="login-button">
+            <button
+              class="button-24"
+              role="button"
+              style="text-align: center"
+              type="submit"
+            >
+              LOGIN
+            </button>
+            <button
+              class="button-24"
+              role="button"
+              id="registerToButton"
+              style="text-align: center"
+            >
+              REGISTER
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <% } %>
     <div id="logo-container">
       <img id="logo" src="/images/logo/SWU_logo.png" alt="CSC Logo" />
     </div>
@@ -29,7 +189,7 @@
       <form action="/add" method="POST">
         <textarea
           id="inputcode"
-          class="placeholdercolor"
+          class="inputcode placeholdercolor"
           name="clipboard"
           placeholder="Enter Your Text Here"
           style="resize: none"
@@ -62,7 +222,12 @@
     </div>
     <div id="back-container">
       <div id="title-back">
-        <button class="button-24" role="button" style="text-align: center" onclick="window.location.href = '/'">
+        <button
+          class="button-24"
+          role="button"
+          style="text-align: center"
+          onclick="window.location.href = '/'"
+        >
           GET BACK
         </button>
       </div>
@@ -90,8 +255,7 @@
     <div id="input-container">
       <form action="/retrieve" method="POST">
         <input
-          id="inputcode"
-          class="placeholdercolor"
+          class="inputcode placeholdercolor"
           name="retrieveID"
           placeholder="Eg. 5281"
         />
@@ -103,12 +267,13 @@
     @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
     #theme-btn {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
     }
     #logo-container {
       display: flex;
       justify-content: center;
       margin-top: 5%;
+      user-select: none;
     }
     #id-container {
       display: flex;
@@ -166,17 +331,94 @@
     .button-24:active {
       opacity: 0.5;
     }
+
+    @media screen and (max-width: 450px) {
+      .button-24 {
+        padding: 0.3vh 0.5vh;
+      }
+    }
+
+    .auth-button {
+      background: #cecece;
+      border: 0.1vh solid #cecece;
+      height: 4vh;
+      border-radius: 0.6vh;
+      box-sizing: border-box;
+      box-shadow: 0 0 1vh rgb(212, 212, 212);
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-block;
+      font-size: 2vh;
+      line-height: 2vh;
+      outline: 0;
+      padding-left: 2vh;
+      padding-right: 2vh;
+      text-align: center;
+      text-rendering: geometricprecision;
+      text-transform: none;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      vertical-align: middle;
+      transition: all 0.25s;
+    }
+
+    .auth-button:hover,
+    .auth-button:active {
+      background-color: initial;
+      background-position: 0 0;
+      color: rgb(100, 100, 100);
+      transition: all 0.25s;
+    }
+
+    .auth-button:active {
+      opacity: 0.5;
+    }
   </style>
   <script src="/js/themebtn.js"></script>
   <script>
-    document
-      .getElementById("inputcode")
-      .addEventListener("keydown", function (event) {
+    document.querySelectorAll(".inputcode").forEach(function (element) {
+    element.addEventListener("keydown", function (event) {
         if (event.key === "Enter" && !event.shiftKey) {
-          // Check if Enter is pressed (without Shift)
-          event.preventDefault(); // Prevent new line
-          this.form.submit(); // Submit form
+        event.preventDefault(); // Prevent new line
+        this.form.submit(); // Submit the form
         }
-      });
+    });
+    });
+
+    <% if (typeof user !== 'undefined' && user) { %>
+        document.getElementById("LogoutButton").addEventListener("click", function() {
+        window.location.href = "/logout";
+    });
+    <% } else { %>
+        document.getElementById("authButton").addEventListener("click", function() {
+        let element = document.getElementById("login-container");
+
+        if (element) { // Check if the element exists
+            if (element.classList.contains("hidden")) {
+                element.classList.remove("hidden");
+                element.classList.add("show");
+            } else {
+                element.classList.remove("show");
+                element.classList.add("hidden");
+            }
+        } else {
+            console.error("Element with ID 'toggleAuth' not found!");
+        }
+    });
+    <% } %>
+
+    <% if (typeof registering !== 'undefined' && registering) { %>
+        document.getElementById("loginToButton").addEventListener("click", function(event) {
+        event.preventDefault(); // Prevent any default behavior
+        console.log("Login to button clicked");
+        window.location.href = "/login"; // Navigate to /register
+        });
+    <% } else { %>
+    document.getElementById("registerToButton").addEventListener("click", function(event) {
+        event.preventDefault(); // Prevent any default behavior
+        window.location.href = "/register"; // Navigate to /register
+    });
+    <% } %>
   </script>
 </html>

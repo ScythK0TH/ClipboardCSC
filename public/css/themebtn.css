@@ -77,7 +77,12 @@ body {
 body.darkmode {
   background-color: var(--dark-color);
 }
+
 #title-back.darkmode {
+  color: var(--dark-mode);
+}
+
+.text-theme.darkmode {
   color: var(--dark-mode);
 }
 
@@ -132,28 +137,43 @@ body.darkmode {
 
 #title-front {
   color: #ff0000;
+  user-select: none;
 }
 #title-back {
   color: var(--light-mode);
   margin-left: 2vh;
   transition: all 0.5s;
+  user-select: none;
 }
 #input-container {
   display: flex;
   justify-content: center;
   margin-top: 3vh;
 }
-#inputcode {
+.inputcode {
   background: none;
-  width: 100%;
   height: 5vh;
-  max-width: 75vh;
+  width: 100%;
+  max-width: 46vh;
   font-size: 4vh;
   border: 0.1vh solid rgb(121, 121, 121);
   border-radius: 1vh;
   transition: all 0.5s;
 }
-#inputcode:hover {
+.inputcode:hover {
+  border: 0.1vh solid white;
+}
+.inputformcode {
+  background: none;
+  height: 5vh;
+  width: 100%;
+  max-width: 60vh;
+  font-size: 4vh;
+  border: 0.1vh solid rgb(121, 121, 121);
+  border-radius: 1vh;
+  transition: all 0.5s;
+}
+.inputformcode:hover {
   border: 0.1vh solid white;
 }
 #output-container {
@@ -180,4 +200,8 @@ body.darkmode {
 }
 .placeholdercolor {
   color: var(--light-mode)
+}
+
+.text-theme {
+  color: var(--light-mode);
 }

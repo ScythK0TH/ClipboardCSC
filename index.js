@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const session = require('express-session');
 const pageController = require('./controllers/pageController');
+const authController = require('./controllers/authController');
 
 // Initialize Express app
 const app = express();
@@ -23,6 +24,13 @@ app.use(
     saveUninitialized: true,
   })
 );
+
+// Pass session data to EJS (for every request)
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null;
+  next();
+});
+
 // Routes
 
 // app.get('/', authController.authenticate, taskController.getTasks);
@@ -36,6 +44,10 @@ app.use(
 // app.post('/search', authController.authenticate, taskController.searchTasksByName);
 
 app.get('/', pageController.getPage);
+app.get('/register', authController.showRegisterPage);
+app.get('/login', authController.showLoginPage);
+app.get('/logout', authController.logout);
+app.post('/login', authController.login);
 app.post('/add', pageController.addClipboard);
 app.post('/retrieve', pageController.retrieveClipboard);
 

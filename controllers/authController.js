@@ -1,5 +1,5 @@
 
-const Encryption = require('../../util');
+const Encryption = require('../util');
 
 util = new Encryption();
 // Hardcoded username and password
@@ -22,7 +22,8 @@ const credentials = {
   // Handle logout
   exports.logout = (req, res) => {
     req.session.destroy(() => {
-      res.redirect('/login');
+      console.log('User logged out');
+      res.redirect('/');
     });
   };
   
@@ -30,7 +31,12 @@ const credentials = {
 // Show login page
 exports.showLoginPage = (req, res) => {
   // Pass unsanitized error message from query parameters
-  res.render('login', { error: req.query.error || null });
+  res.render('index', { error: req.query.error || null, registering: null, logining: true });
+};
+
+// Show register page
+exports.showRegisterPage = (req, res) => {
+  res.render('index', { error: req.query.error || null, registering: true });
 };
 
 
@@ -46,8 +52,7 @@ exports.login = (req, res) => {
   } else {
     // Reflect the unsanitized username in the error message
     const error = `Invalid credentials for username: ${username}`;
-    console.log("username or password is not correct");
-    res.render('login', { error });
+    res.render('index', { loginerror: error, registering: null, logining: true });
   }
 };
 

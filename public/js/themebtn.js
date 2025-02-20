@@ -1,6 +1,7 @@
 const body = document.querySelector('body');
 const title = document.querySelectorAll('#title-back');
 const placeholder = document.querySelectorAll('.placeholdercolor');
+const texttheme = document.querySelectorAll('.text-theme');
 const btn = document.querySelector('.theme_container');
 const icon = document.querySelector('.theme_icon');
 
@@ -27,6 +28,9 @@ function load(){
     for(let i = 0; i < placeholder.length; i++){
       placeholder[i].classList.add('darkmode');
     }
+    for(let i = 0; i < texttheme.length; i++){
+      texttheme[i].classList.add('darkmode');
+    }
     icon.classList.add('fa-moon');
   } else if(darkmode == 'false'){ //if the dark mode exists but is disabled
     icon.classList.add('fa-sun');
@@ -44,6 +48,9 @@ btn.addEventListener('click', () => {
   }
   for(let i = 0; i < placeholder.length; i++){
     placeholder[i].classList.toggle('darkmode');
+  }
+  for(let i = 0; i < texttheme.length; i++){
+    texttheme[i].classList.toggle('darkmode');
   }
   icon.classList.add('animated');
 
