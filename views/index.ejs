@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/themebtn.css" />
+    <title>CSC Clipboard</title>
+  </head>
+  <body>
+    <div id="theme-btn">
+      <div class="theme_container">
+        <div class="theme_indicator">
+          <div class="theme_icon-container">
+            <i class="theme_icon fa-solid"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="logo-container">
+      <img id="logo" src="/images/logo/SWU_logo.png" alt="CSC Logo" />
+    </div>
+    <div id="title">
+      <div id="title-front"><span style="text-align: center">SWU</span></div>
+      <div id="title-back">
+        <span style="text-align: center">CLIPBOARD</span>
+      </div>
+    </div>
+    <div id="input-container">
+      <form action="/add" method="POST">
+        <textarea
+          id="inputcode"
+          class="placeholdercolor"
+          name="clipboard"
+          placeholder="Enter Your Text Here"
+          style="resize: none"
+        ></textarea>
+      </form>
+    </div>
+    <% if (typeof clipid !== 'undefined' && clipid) { %>
+    <div id="id-container">
+      <div id="title-back">
+        <span style="text-align: center">ID: <%= clipid %></span>
+      </div>
+    </div>
+    <% } %> <% if (typeof clipout !== 'undefined' && clipout) { %>
+    <div id="title">
+      <div id="title-front"><span style="text-align: center">GET</span></div>
+      <div id="title-back">
+        <span style="text-align: center">CLIPBOARD</span>
+      </div>
+      <div id="title-back"><span style="text-align: center">HERE</span></div>
+    </div>
+    <div id="output-container">
+      <textarea
+        id="outputcode"
+        class="placeholdercolor"
+        name="output"
+        placeholder="Your Output Here"
+      >
+<%= clipout %></textarea
+      >
+    </div>
+    <div id="back-container">
+      <div id="title-back">
+        <button class="button-24" role="button" style="text-align: center" onclick="window.location.href = '/'">
+          GET BACK
+        </button>
+      </div>
+    </div>
+    <% } else { %>
+    <div id="title">
+      <% if (typeof clipnotfound !== 'undefined' && clipnotfound) { %>
+      <div id="title-front" class="cliperror">
+        <span style="text-align: center"><%= clipnotfound %></span>
+      </div>
+      <script>
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 2000);
+      </script>
+      <% } else { %>
+      <div id="title-front"><span style="text-align: center">ENTER</span></div>
+      <div id="title-back">
+        <span style="text-align: center">CLIPBOARD</span>
+      </div>
+      <div id="title-back"><span style="text-align: center">ID</span></div>
+      <div id="title-back"><span style="text-align: center">HERE</span></div>
+      <% } %>
+    </div>
+    <div id="input-container">
+      <form action="/retrieve" method="POST">
+        <input
+          id="inputcode"
+          class="placeholdercolor"
+          name="retrieveID"
+          placeholder="Eg. 5281"
+        />
+      </form>
+    </div>
+    <% } %>
+  </body>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
+    #theme-btn {
+      display: flex;
+      justify-content: flex-end;
+    }
+    #logo-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 5%;
+    }
+    #id-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 3vh;
+    }
+    #back-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 2vh;
+      margin-bottom: 10%;
+    }
+    #logo {
+      width: 30vh;
+      transition: all 0.5s;
+    }
+
+    @media screen and (max-width: 350px) {
+      #logo {
+        width: 20vh;
+      }
+    }
+
+    .button-24 {
+      background: #ff0000;
+      border: 0.1vh solid #ff0000;
+      border-radius: 0.6vh;
+      box-sizing: border-box;
+      box-shadow: 0 0 1vh rgb(255, 0, 0);
+      color: #ffffff;
+      cursor: pointer;
+      display: inline-block;
+      font-size: 2vh;
+      line-height: 2vh;
+      outline: 0;
+      padding: 1.2vh 4.4vh;
+      text-align: center;
+      text-rendering: geometricprecision;
+      text-transform: none;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      vertical-align: middle;
+      transition: all 0.25s;
+    }
+
+    .button-24:hover,
+    .button-24:active {
+      background-color: initial;
+      background-position: 0 0;
+      color: rgb(255, 0, 0);
+      transition: all 0.25s;
+    }
+
+    .button-24:active {
+      opacity: 0.5;
+    }
+  </style>
+  <script src="/js/themebtn.js"></script>
+  <script>
+    document
+      .getElementById("inputcode")
+      .addEventListener("keydown", function (event) {
+        if (event.key === "Enter" && !event.shiftKey) {
+          // Check if Enter is pressed (without Shift)
+          event.preventDefault(); // Prevent new line
+          this.form.submit(); // Submit form
+        }
+      });
+  </script>
+</html>
