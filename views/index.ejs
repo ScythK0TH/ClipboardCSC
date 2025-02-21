@@ -46,22 +46,22 @@
       <div id="register-form">
         <form action="/register" method="POST">
           <div id="username-input">
-            <label for="username-field" class="text-theme transition-theme"
+            <label for="username-field" class="runame-label text-theme transition-theme"
               >Username</label
             >
             <input
-              id="username-field"
+              id="rusername-field"
               class="inputformcode placeholdercolor"
               name="username"
             />
           </div>
 
           <div id="password-input">
-            <label for="password-field" class="text-theme transition-theme"
+            <label for="password-field" class="rpass-label text-theme transition-theme"
               >Password</label
             >
             <input
-              id="password-field"
+              id="rpassword-field"
               class="inputformcode placeholdercolor"
               name="password"
               type="password"
@@ -69,27 +69,43 @@
           </div>
 
           <div id="cpassword-input">
-            <label for="cpassword-field" class="text-theme transition-theme"
+            <label for="cpassword-field" class="rcpass-label text-theme transition-theme"
               >Confirm Password</label
             >
             <input
-              id="cpassword-field"
+              id="rcpassword-field"
               class="inputformcode placeholdercolor"
-              name="password"
+              name="cpassword"
               type="password"
             />
           </div>
 
-          <div id="login-button">
+          <div id="tiny-container">
+            <div
+              id="login-error"
+              class="text-theme"
+              style="
+                margin-left: 3vh;
+                margin-top: -1vh;
+                margin-bottom: 3vh;
+                font-size: 1.5vh;
+              "
+            >
+              <% if (typeof regiserror !== 'undefined' && regiserror) { %>
+              <p1 style="color: #ff0000"><%= regiserror %></p1>
+              <% } %>
+            </div>
+
             <button
               id="loginToButton"
-              class="button-24"
-              role="button"
-              style="text-align: center"
+              class="rtiny-button text-theme"
               type="button"
             >
-              LOGIN
+              Already have an account?
             </button>
+          </div>
+
+          <div id="login-button">
             <button
               class="button-24"
               role="button"
@@ -113,7 +129,7 @@
       <div id="login-form">
         <form action="/login" method="POST">
           <div id="username-input">
-            <label for="username-field" class="text-theme transition-theme"
+            <label for="username-field" class="uname-label text-theme transition-theme"
               >Username</label
             >
             <input
@@ -124,7 +140,7 @@
           </div>
 
           <div id="password-input">
-            <label for="password-field" class="text-theme transition-theme"
+            <label for="password-field" class="pass-label text-theme transition-theme"
               >Password</label
             >
             <input
@@ -135,24 +151,30 @@
             />
           </div>
 
-          <div id="remember-me">
-            <input id="remember-me-checkbox" name="remember" type="checkbox" />
-            <label
-              for="remember-me-checkbox"
-              class="text-theme transition-theme"
-              >Remember Me</label
+          <div id="tiny-container">
+            <div
+              id="login-error"
+              class="text-theme"
+              style="
+                margin-left: 3vh;
+                margin-top: -1vh;
+                margin-bottom: 3vh;
+                font-size: 1.5vh;
+              "
             >
-          </div>
+              <% if (typeof loginerror !== 'undefined' && loginerror) { %>
+              <p1 style="color: #ff0000"><%= loginerror %></p1>
+              <% } %>
+            </div>
 
-          <% if (typeof loginerror !== 'undefined' && loginerror) { %>
-          <div
-            id="login-error"
-            class="text-theme"
-            style="margin-left: 3vh; margin-bottom: 2vh"
-          >
-            <p1 style="color: #ff0000"><%= loginerror %></p1>
+            <button
+              id="registerToButton"
+              class="tiny-button text-theme"
+              type="button"
+            >
+              Don't have an account?
+            </button>
           </div>
-          <% } %>
 
           <div id="login-button">
             <button
@@ -162,14 +184,6 @@
               type="submit"
             >
               LOGIN
-            </button>
-            <button
-              class="button-24"
-              role="button"
-              id="registerToButton"
-              style="text-align: center"
-            >
-              REGISTER
             </button>
           </div>
         </form>
@@ -221,16 +235,14 @@
       >
     </div>
     <div id="back-container">
-      <div id="title-back">
-        <button
-          class="button-24"
-          role="button"
-          style="text-align: center"
-          onclick="window.location.href = '/'"
-        >
-          GET BACK
-        </button>
-      </div>
+      <button
+        class="button-24"
+        role="button"
+        style="text-align: center"
+        onclick="window.location.href = '/'"
+      >
+        GET BACK
+      </button>
     </div>
     <% } else { %>
     <div id="title">
@@ -262,6 +274,45 @@
       </form>
     </div>
     <% } %>
+    <% if (typeof user !== 'undefined' && user) { %>
+    <div id="title">
+      <div id="title-front"><span style="text-align: center">WELCOME</span></div>
+      <div id="title-back">
+        <span style="text-align: center;"><%= user.toUpperCase()+"!!" %></span>
+      </div>
+    </div>
+    <div id="history-container" style="display: flex; justify-content: center; margin: 3vh;">
+      <table id="cliptable">
+        <thead>
+          <tr>
+            <th class="text-theme clipcellhead">CLIP ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (typeof userclip !== 'undefined' && userclip) { %>
+            <% if (userclip == 0) { %>
+              <tr>
+                <td class="text-theme clipcell">
+                  No History
+                </td>
+              </tr>
+            <% } else { %>
+              <% userclip.forEach(function(clip) { %>
+                <tr onclick="document.getElementById('form-<%= clip.ID %>').submit();">
+                  <form action="/retrieve" method="POST" id="form-<%= clip.ID %>">
+                    <input type="hidden" name="retrieveID" value="<%= clip.ID %>" />
+                    <td class="text-theme clipcell">
+                      <%= clip.ID %>
+                    </td>
+                  </form>
+                </tr>
+              <% }); %>
+            <% } %>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+    <% } %>
   </body>
   <style>
     @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
@@ -284,7 +335,7 @@
       display: flex;
       justify-content: center;
       margin-top: 2vh;
-      margin-bottom: 10%;
+      margin-bottom: 5%;
     }
     #logo {
       width: 30vh;

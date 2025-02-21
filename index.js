@@ -48,6 +48,7 @@ app.get('/register', authController.showRegisterPage);
 app.get('/login', authController.showLoginPage);
 app.get('/logout', authController.logout);
 app.post('/login', authController.login);
+app.post('/register', authController.register);
 app.post('/add', pageController.addClipboard);
 app.post('/retrieve', pageController.retrieveClipboard);
 

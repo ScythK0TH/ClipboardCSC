@@ -1,13 +1,16 @@
 
 const Encryption = require('../util');
+const path = require('path');
+const User = require('../models/userModel');
+
+// Initialize the Task model
+const credentials = new User();
+const usersFilePath = path.join(__dirname, '../user.json');
+
+// Load users from file on app start
+credentials.loadUsersFromFile(usersFilePath);
 
 util = new Encryption();
-// Hardcoded username and password
-const credentials = {
-    username: 'admin',
-    password: '6002968392b901e9305d87e3', 
-    //'123',
-  };
   
   // Middleware to check authentication
   exports.authenticate = (req, res, next) => {
@@ -39,13 +42,38 @@ exports.showRegisterPage = (req, res) => {
   res.render('index', { error: req.query.error || null, registering: true });
 };
 
+// Handle registration
+exports.register = (req, res) => {
+  const { username, password, cpassword } = req.body;
+  secret = util.encrypt(password);
+  if (!username || !password || !cpassword) {
+    const error = 'All fields are required';
+    res.render('index', { regiserror: error, registering: true });
+  } else if (username.length < 3) {
+    const error = 'Username must be at least 3 characters';
+    res.render('index', { regiserror: error, registering: true });
+  }else if (password !== cpassword) {
+    const error = 'Passwords do not match';
+    res.render('index', { regiserror: error, registering: true });
+  } else if (password.length < 8) {
+    const error = 'Password must be at least 8 characters';
+    res.render('index', { regiserror: error, registering: true });
+  } else if (credentials.Users.some((user) => user.username === username)) {
+    const error = `Username: ${username} already exists`;
+    res.render('index', { regiserror: error, registering: true });
+  } else {
+    credentials.addUser({ username, password: secret });
+    credentials.saveUsersToFile(usersFilePath);
+    res.redirect('/login');
+  }
+};
 
 
 // Handle login
 exports.login = (req, res) => {
   const { username, password } = req.body;
   secret = util.encrypt(password);
-  if (username === credentials.username && secret === credentials.password) {
+  if (credentials.Users.some((user) => user.username === username) && credentials.Users.some((user) => user.password === secret)) {
     req.session.user = username;
     console.log(username + " has logged in");
     res.redirect('/');

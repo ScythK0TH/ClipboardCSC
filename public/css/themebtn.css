@@ -92,6 +92,7 @@ body.darkmode {
 
 .placeholdercolor.darkmode{
   color: var(--dark-mode);
+  border: 0.1vh solid rgb(212, 212, 212);
 }
 
 .darkmode .theme_container {

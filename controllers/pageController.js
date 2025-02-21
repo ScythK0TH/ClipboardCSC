@@ -1,49 +1,77 @@
 const path = require('path');
 const Clip = require('../models/clipModel');
+const uClip = require('../models/uclipModel');
 
 // Initialize the Task model
 const clipModel = new Clip();
-const clipsFilePath = path.join(__dirname, '../ctext.json');
+const clipsFilePath = path.join(__dirname, '../anonymous.json');
+
+const uclipModel = new uClip();
+const uclipsFilePath = path.join(__dirname, '../userclipboard.json');
 
 // Load tasks from file on app start
 clipModel.loadClipsFromFile(clipsFilePath);
+uclipModel.loadClipsFromFile(uclipsFilePath);
 
 // Controller functions
 exports.getPage = (req, res) => {
-  res.render('index');
+  if (req.session.user) {
+    const clips = uclipModel.getUserClips(req.session.user);
+    res.render('index', { userclip: clips });
+  } else {
+    res.render('index');
+  }
 };
 
 exports.addClipboard = (req, res) => {
-  if (!req.body.clipboard) {
-    return res.status(400).send('Clipboard content is required');
-  } else {
-    if (req.body.clipboard.length > 2000) {
-      return res.status(400).send('Clipboard content is too long');
-    }
-  }
   const clipboard = {
     // ID: req.body.ID ? req.body.ID : 408,
-    ID: req.body.ID ? req.body.ID : Math.floor(Math.random() * 9000) + 1000,
-    UID: req.body.UID ? req.body.UID : "NULL",
-    username: req.body.username ? req.body.username : "Anonymous",
+    ID: Math.floor(Math.random() * 9000) + 1000,
+    username: req.session.user ? req.session.user : "Anonymous",
     description: req.body.clipboard ? req.body.clipboard : "No description"
   };
-  if (clipModel.Clips.some((clip) => clip.ID === clipboard.ID)) {
-    this.addClipboard(req, res);
+  if (!req.body.clipboard) {
+    return res.render('index', { clipnotfound: "Clipboard content is required" });
+  } else if (req.body.clipboard.length > 2000) {
+    return res.render('index', { clipnotfound: "Clipboard content is too long" });
   }
-  clipModel.addClip(clipboard);
-  console.log("new clipboard has been added");
-  clipModel.saveClipsToFile(clipsFilePath);
-  res.render('index', { clipid: clipboard.ID });
+
+  if (req.session.user) {
+    const clips = uclipModel.getUserClips(req.session.user);
+    if (uclipModel.Clips.some((clip) => clip.ID === clipboard.ID)) {
+      this.addClipboard(req, res);
+    }
+    uclipModel.addClip(clipboard);
+    // console.log("new clipboard has been added");
+    uclipModel.saveClipsToFile(uclipsFilePath);
+    res.render('index', { clipid: clipboard.ID, userclip: clips });
+  } else {
+    if (clipModel.Clips.some((clip) => clip.ID === clipboard.ID)) {
+      this.addClipboard(req, res);
+    }
+    clipModel.addClip(clipboard);
+    // console.log("new clipboard has been added");
+    clipModel.saveClipsToFile(clipsFilePath);
+    res.render('index', { clipid: clipboard.ID });
+  }
 }
 
 exports.retrieveClipboard = (req, res) => {
   const clipID = req.body.retrieveID;
-  const clip = clipModel.Clips.find((clip) => clip.ID == clipID);
-  if (!clip) {
-    return res.render('index', { clipnotfound: "NO CLIPBOARD FOUND!!" });
+  if (req.session.user) {
+    const userclip = uclipModel.getUserClips(req.session.user);
+    const clip = uclipModel.Clips.find((clip) => clip.ID == clipID);
+    if (!clip) {
+      return res.render('index', { clipnotfound: "NO CLIPBOARD FOUND!!" });
+    }
+    res.render('index', { clipout: clip.description, userclip: userclip });
+  } else {
+    const clip = clipModel.Clips.find((clip) => clip.ID == clipID);
+    if (!clip) {
+      return res.render('index', { clipnotfound: "NO CLIPBOARD FOUND!!" });
+    }
+    res.render('index', { clipout: clip.description });
   }
-  res.render('index', { clipout: clip.description });
 }
 // exports.addTask = (req, res) => {
 //   const task = {
