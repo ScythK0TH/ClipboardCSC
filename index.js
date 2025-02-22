@@ -28,6 +28,14 @@ app.use(
 // Pass session data to EJS (for every request)
 app.use((req, res, next) => {
   res.locals.user = req.session.user || null;
+  res.locals.currentDate = new Date().toLocaleString('en-GB', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  });
   next();
 });
 

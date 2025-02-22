@@ -1,22 +1,17 @@
 const path = require('path');
 const Clip = require('../models/clipModel');
-const uClip = require('../models/uclipModel');
 
 // Initialize the Task model
 const clipModel = new Clip();
-const clipsFilePath = path.join(__dirname, '../anonymous.json');
-
-const uclipModel = new uClip();
-const uclipsFilePath = path.join(__dirname, '../userclipboard.json');
+const clipsFilePath = path.join(__dirname, '../userclipboards.json');
 
 // Load tasks from file on app start
 clipModel.loadClipsFromFile(clipsFilePath);
-uclipModel.loadClipsFromFile(uclipsFilePath);
 
 // Controller functions
 exports.getPage = (req, res) => {
   if (req.session.user) {
-    const clips = uclipModel.getUserClips(req.session.user);
+    const clips = clipModel.getUserClips(req.session.user);
     res.render('index', { userclip: clips });
   } else {
     res.render('index');
@@ -27,6 +22,7 @@ exports.addClipboard = (req, res) => {
   const clipboard = {
     // ID: req.body.ID ? req.body.ID : 408,
     ID: Math.floor(Math.random() * 9000) + 1000,
+    Time: res.locals.currentDate ? res.locals.currentDate : "NULL",
     username: req.session.user ? req.session.user : "Anonymous",
     description: req.body.clipboard ? req.body.clipboard : "No description"
   };
@@ -37,13 +33,13 @@ exports.addClipboard = (req, res) => {
   }
 
   if (req.session.user) {
-    const clips = uclipModel.getUserClips(req.session.user);
-    if (uclipModel.Clips.some((clip) => clip.ID === clipboard.ID)) {
+    if (clipModel.Clips.some((clip) => clip.ID === clipboard.ID)) {
       this.addClipboard(req, res);
     }
-    uclipModel.addClip(clipboard);
+    clipModel.addClip(clipboard);
     // console.log("new clipboard has been added");
-    uclipModel.saveClipsToFile(uclipsFilePath);
+    clipModel.saveClipsToFile(clipsFilePath);
+    const clips = clipModel.getUserClips(req.session.user);
     res.render('index', { clipid: clipboard.ID, userclip: clips });
   } else {
     if (clipModel.Clips.some((clip) => clip.ID === clipboard.ID)) {
@@ -59,11 +55,11 @@ exports.addClipboard = (req, res) => {
 exports.retrieveClipboard = (req, res) => {
   const clipID = req.body.retrieveID;
   if (req.session.user) {
-    const userclip = uclipModel.getUserClips(req.session.user);
-    const clip = uclipModel.Clips.find((clip) => clip.ID == clipID);
+    const clip = clipModel.Clips.find((clip) => clip.ID == clipID);
     if (!clip) {
       return res.render('index', { clipnotfound: "NO CLIPBOARD FOUND!!" });
     }
+    const userclip = clipModel.getUserClips(req.session.user);
     res.render('index', { clipout: clip.description, userclip: userclip });
   } else {
     const clip = clipModel.Clips.find((clip) => clip.ID == clipID);

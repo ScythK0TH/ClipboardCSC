@@ -115,35 +115,6 @@
   color: #ff0000;
 }
 
-#cliptable {
-  margin: 0;
-  border: 0.1vh solid rgb(121, 121, 121);
-  border-radius: 1vh;
-}
-
-#cliptable th,
-td {
-  border-bottom: 0.1vh solid rgb(121, 121, 121);
-  padding: 1vh 20vh 1vh 20vh;
-  transition: all 0.5s;
-}
-
-#cliptable tr:hover td {
-  cursor: pointer;
-  background-color: initial;
-  background-position: 0 0;
-  color: rgb(255, 0, 0);
-}
-
-#cliptable th,
-tr {
-  text-align: center;
-}
-
-#cliptable tr:last-child td {
-  border-bottom: none;
-}
-
 @media screen and (max-width: 480px) {
   #rlogin-title {
     font-size: 4vh; /* Smaller size for mobile */

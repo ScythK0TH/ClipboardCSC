@@ -282,7 +282,7 @@
       </div>
     </div>
     <div id="history-container" style="display: flex; justify-content: center; margin: 3vh;">
-      <table id="cliptable">
+      <table class="cliptable placeholdercolor">
         <thead>
           <tr>
             <th class="text-theme clipcellhead">CLIP ID</th>
@@ -302,7 +302,7 @@
                   <form action="/retrieve" method="POST" id="form-<%= clip.ID %>">
                     <input type="hidden" name="retrieveID" value="<%= clip.ID %>" />
                     <td class="text-theme clipcell">
-                      <%= clip.ID %>
+                      <%= "ID: " + clip.ID + " " + "<" + clip.Time + ">"  %>
                     </td>
                   </form>
                 </tr>

@@ -19,17 +19,8 @@ class Clip {
     return this.Clips.map((Clip) => this.encryptClip(Clip));
   }
 
-  // Summarize Clips by priority
-  summarizeByPriority() {
-    const summary = {};
-    this.Clips.forEach((Clip) => {
-      summary[Clip.priority] = (summary[Clip.priority] || 0) + 1;
-    });
-    return summary;
-  }
-
-  sortByPriority() {
-    return this.Clips.sort((a, b) => a.priority - b.priority);
+  getUserClips(username) {
+    return this.Clips.filter((Clip) => Clip.username === username);
   }
 
   searchByName(name) {
