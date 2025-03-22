@@ -51,14 +51,25 @@ app.use((req, res, next) => {
 // app.post('/delete', authController.authenticate, taskController.deleteMultipleTasks);
 // app.post('/search', authController.authenticate, taskController.searchTasksByName);
 
+// Page routes
 app.get('/', pageController.getPage);
 app.get('/register', authController.showRegisterPage);
 app.get('/login', authController.showLoginPage);
 app.get('/logout', authController.logout);
+
+// Authentication
 app.post('/login', authController.login);
 app.post('/register', authController.register);
+
+//CRUD operations
 app.post('/add', pageController.addClipboard);
 app.post('/retrieve', pageController.retrieveClipboard);
+app.post('/update', pageController.updateClipboard);
+app.post('/delete', pageController.deleteClipboard);
+
+// Sort and search
+app.post('/search', pageController.searchClipboard);
+app.post('/sort', pageController.sortClipboard);
 
 
 // Start server

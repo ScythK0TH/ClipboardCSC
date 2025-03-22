@@ -23,11 +23,42 @@ class Clip {
     return this.Clips.filter((Clip) => Clip.username === username);
   }
 
-  searchByName(name) {
-    const foundClips = this.Clips
-      .filter((Clip) => Clip.name.toLowerCase().includes(name.toLowerCase()))
-      .map((Clip) => this.encryptClip(Clip));
-    return foundClips;
+  searchClipboardByName(name, user) {
+    if (!name) {
+      return this.Clips.filter((Clip) => Clip.username === user);
+    }
+    if (user) {
+      return this.Clips.filter(
+        (Clip) =>
+          Clip.title.toLowerCase().includes(name.toLowerCase()) &&
+          Clip.username === user
+      );
+    }
+  }
+
+  sortAndSearchByName(name, user, isAscending = true) {
+    const filteredClips = this.searchClipboardByName(name, user);
+    return filteredClips.sort((a, b) => {
+      const nameA = a.title.toLowerCase();
+      const nameB = b.title.toLowerCase();
+      if (nameA < nameB) return isAscending ? -1 : 1;
+      if (nameA > nameB) return isAscending ? 1 : -1;
+      return 0;
+    });
+  }
+
+  // Delete the newest task
+  deleteNewestClip() {
+    if (this.Clips.length > 0) {
+      this.Clips.pop();
+    }
+  }
+
+  // Delete the oldest task
+  deleteOldestClip() {
+    if (this.Clips.length > 0) {
+      this.Clips.shift();
+    }
   }
 
   encryptClip(Clip) {
