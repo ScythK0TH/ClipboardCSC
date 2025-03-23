@@ -89,11 +89,43 @@ exports.deleteClipboard = (req, res) => {
   }
 
   const idsToDelete = Array.isArray(deleteIDs) ? deleteIDs : [deleteIDs];
+  const unauthorized = idsToDelete.some((id) => {
+    const clip = clipModel.Clips.find((clip) => clip.ID == id);
+    return !clip || req.session.user !== clip.username;
+  });
+
+  if (unauthorized) {
+    return res.render('index', { clipnotfound: "You are not the owner of one or more selected clipboards", userclip: req.session.user ? clipModel.getUserClips(req.session.user) : undefined });
+  }
   clipModel.Clips = clipModel.Clips.filter((clip) => !idsToDelete.includes(clip.ID.toString()));
   clipModel.saveClipsToFile(clipsFilePath);
 
   res.render('index', { userclip: req.session.user ? clipModel.getUserClips(req.session.user) : undefined });
 };
+
+exports.deleteNewestClipboard = (req, res) => {
+  user = req.session.user;
+  const userClips = clipModel.Clips.filter((clip) => clip.username === user);
+  if (!userClips.length || user !== userClips[userClips.length - 1].username) {
+    return res.render('index', { clipnotfound: "You are not the owner of this clipboard", userclip: req.session.user ? clipModel.getUserClips(req.session.user) : undefined });
+  }
+
+  clipModel.deleteNewestClip(user);
+  clipModel.saveClipsToFile(clipsFilePath);
+  res.render('index', { userclip: req.session.user ? clipModel.getUserClips(req.session.user) : undefined });
+}
+
+exports.deleteOldestClipboard = (req, res) => {
+  user = req.session.user;
+  const userClips = clipModel.Clips.filter((clip) => clip.username === user);
+  if (!userClips.length || user !== userClips[0].username) {
+    return res.render('index', { clipnotfound: "You are not the owner of this clipboard", userclip: req.session.user ? clipModel.getUserClips(req.session.user) : undefined });
+  }
+
+  clipModel.deleteOldestClip(user);
+  clipModel.saveClipsToFile(clipsFilePath);
+  res.render('index', { userclip: req.session.user ? clipModel.getUserClips(req.session.user) : undefined });
+}
 
 exports.searchClipboard = (req, res) => {
   const searchName = req.body.searchinput;

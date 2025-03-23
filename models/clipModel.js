@@ -48,16 +48,20 @@ class Clip {
   }
 
   // Delete the newest task
-  deleteNewestClip() {
-    if (this.Clips.length > 0) {
-      this.Clips.pop();
+  deleteNewestClip(user) {
+    const userClips = this.Clips.filter((clip) => clip.username === user);
+    if (userClips.length > 0) {
+      const newestClipIndex = this.Clips.lastIndexOf(userClips[userClips.length - 1]);
+      this.Clips.splice(newestClipIndex, 1);
     }
   }
 
   // Delete the oldest task
-  deleteOldestClip() {
-    if (this.Clips.length > 0) {
-      this.Clips.shift();
+  deleteOldestClip(user) {
+    const userClips = this.Clips.filter((clip) => clip.username === user);
+    if (userClips.length > 0) {
+      const oldestClipIndex = this.Clips.indexOf(userClips[0]);
+      this.Clips.splice(oldestClipIndex, 1);
     }
   }
 
