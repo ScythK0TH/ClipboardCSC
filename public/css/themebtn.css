@@ -13,7 +13,7 @@ body {
   font-family: JetBrains Mono;
   margin: 1vh;
   padding: 0;
-  transition: all 0.5s;
+  transition: background-color 0.25s;
 }
 
 /* -------------- BUTTON -------------- */
@@ -148,7 +148,7 @@ body.darkmode {
 #title-back {
   color: var(--light-mode);
   margin-left: 2vh;
-  transition: all 0.5s;
+  transition: color 0.25s;
   user-select: none;
 }
 #input-container {
@@ -164,7 +164,7 @@ body.darkmode {
   font-size: 4vh;
   border: 0.1vh solid rgb(121, 121, 121);
   border-radius: 1vh;
-  transition: all 0.5s;
+  transition: color 0.25s;
 }
 .inputcode:hover {
   border: 0.1vh solid white;
@@ -177,7 +177,7 @@ body.darkmode {
   font-size: 4vh;
   border: 0.1vh solid rgb(121, 121, 121);
   border-radius: 1vh;
-  transition: all 0.5s;
+  transition: color 0.25s;
 }
 .inputformcode:hover {
   border: 0.1vh solid white;
@@ -195,7 +195,7 @@ body.darkmode {
   font-size: 2vh;
   border: 0.1vh solid rgb(121, 121, 121);
   border-radius: 1vh;
-  transition: all 0.5s;
+  transition: color 0.25s;
 }
 #outputcode:hover {
   border: 0.1vh solid white;
@@ -211,7 +211,7 @@ body.darkmode {
   font-size: 4vh;
   border: 0.1vh solid rgb(121, 121, 121);
   border-radius: 1vh;
-  transition: all 0.5s;
+  transition: color 0.25s;
 }
 
 #outputtitle:hover {
@@ -235,7 +235,7 @@ body.darkmode {
 .cliptable td {
   border-bottom: 0.1vh solid rgb(121, 121, 121);
   padding: 1vh 5vh;
-  transition: all 0.5s;
+  transition: color 0.25s;
 }
 
 .cliptable tr:hover td {

@@ -3,11 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Apply dark mode class based on localStorage before the page is fully visible
+      document.addEventListener('DOMContentLoaded', () => {
+      if (localStorage.getItem('darkmode') === 'true') {
+        document.body.classList.add('darkmode');
+      }
+      // Add a delay of 0.5 seconds before removing the theme-loading class
+      setTimeout(() => {
+        document.body.classList.remove('theme-loading');
+      }, 250);
+      });
+    </script>
     <link rel="stylesheet" href="/css/themebtn.css" />
     <link rel="stylesheet" href="/css/loginui.css" />
     <title>CSC Clipboard</title>
   </head>
-  <body>
+  <body class="theme-loading">
     <div id="theme-btn">
       <div class="auth-container">
         <% if (typeof user !== 'undefined' && user) {%>
@@ -228,12 +240,13 @@
         </div>
         <form action="/update" method="POST">
           <div id="output-container">
-            <textarea
+            <input
               id="outputtitle"
               class="placeholdercolor"
               name="title"
               placeholder="Your Output Title Here"
-            ><%= cliptitle %></textarea>
+              value="<%= cliptitle %>"
+            />
           </div>    
           <div id="output-container">
             <textarea
@@ -466,6 +479,11 @@
 
   <style>
     @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
+    
+    body.theme-loading {
+      visibility: hidden;
+    }
+
     #theme-btn {
       display: flex;
       justify-content: space-between;
