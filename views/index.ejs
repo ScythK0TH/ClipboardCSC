@@ -203,7 +203,7 @@
     </div>
     <% } %>
     <div id="logo-container">
-      <img id="logo" src="/images/logo/SWU_logo.png" alt="CSC Logo" />
+      <img id="logo" src="/images/logo/SWU_logo.webp" alt="CSC Logo" />
     </div>
     <div id="title">
       <div id="title-front"><span style="text-align: center">SWU</span></div>
@@ -440,41 +440,37 @@
       </div>
     </form>
     <form action="/delete" method="POST">
-      <div id="history-container" style="display: flex; justify-content: center; margin: 3vh;">
-        <table class="cliptable placeholdercolor">
-          <thead>
-            <tr>
-              <th class="text-theme clipcellhead">SELECT</th>
-              <th class="text-theme clipcellhead">ID</th>
-              <th class="text-theme clipcellhead">TITLE</th>
-              <th class="text-theme clipcellhead">DATE</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% if (typeof userclip !== 'undefined' && userclip) { %>
-              <% if (userclip && userclip.length > 0) { %>
-                <% userclip.forEach(function(clip) { %>
-                  <tr
-                    class="clip-row"
-                    data-id="<%= clip.ID %>"
-                    title="Click to load this clip"
-                  >
-                    <td onclick="event.stopPropagation();" class="text-theme clipcell">
-                      <input type="checkbox" name="deleteIDs" value="<%= clip.ID %>">
-                    </td>
-                    <td class="text-theme clipcell"><%= clip.ID %></td>
-                    <td class="text-theme clipcell"><%= clip.title %></td>
-                    <td class="text-theme clipcell"><%= clip.time %></td>
-                  </tr>
-                <% }); %>
-              <% } else { %>
-                <tr>
-                  <td colspan="4" class="text-theme clipcell">No History</td>
-                </tr>
-              <% } %>
+      <div id="history-container" style="display: flex; justify-content: center; margin-top: 3vh;">
+        <div class="clipcontainer placeholdercolor">
+          <div class="clipheader">
+            <div class="text-theme clipcellhead">SELECT</div>
+            <div class="text-theme clipcellhead">ID</div>
+            <div class="text-theme clipcellhead">TITLE</div>
+            <div class="text-theme clipcellhead">DATE</div>
+          </div>
+          <% if (typeof userclip !== 'undefined' && userclip) { %>
+            <% if (userclip && userclip.length > 0) { %>
+              <% userclip.forEach(function(clip) { %>
+                <div
+                  class="clip-row"
+                  data-id="<%= clip.ID %>"
+                  title="Click to load this clip"
+                >
+                  <div onclick="event.stopPropagation();" class="text-theme clipcell">
+                    <input type="checkbox" name="deleteIDs" value="<%= clip.ID %>">
+                  </div>
+                  <div class="text-theme clipcell"><%= clip.ID %></div>
+                  <div class="text-theme clipcell"><%= clip.title %></div>
+                  <div class="text-theme clipcell"><%= clip.time %></div>
+                </div>
+              <% }); %>
+            <% } else { %>
+              <div class="clip-row">
+                <div class="text-theme clipcell" colspan="4">No History</div>
+              </div>
             <% } %>
-          </tbody>
-        </table>
+          <% } %>
+        </div>
       </div>
       <% if (typeof userclip !== 'undefined' && userclip) { %>
         <% if (userclip && userclip.length > 0) { %>

@@ -222,36 +222,59 @@ body.darkmode {
   display: none;  /* Chrome, Safari */
 }
 
-.cliptable {
+.clipcontainer {
+  display: flex;
+  flex-direction: column;
   margin: 0;
   border: 0.1vh solid rgb(121, 121, 121);
-  border-collapse: separate; /* Change from 'collapse' to 'separate' */
-  border-spacing: 0; /* Ensure no extra space between cells */
-  border-radius: 1vh; /* Adjust as needed */
-  overflow: hidden; /* Ensures rounded corners are applied */
+  border-radius: 1vh;
+  overflow: hidden;
+  width: 100%; /* Full width */
+  max-width: 75vh; /* Limit width */
 }
 
-.cliptable th,
-.cliptable td {
-  border-bottom: 0.1vh solid rgb(121, 121, 121);
+.clipheader, .clip-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 2fr; /* Adjust column sizes */
+  align-items: center;
   padding: 1vh 5vh;
+  border-bottom: 0.1vh solid rgb(121, 121, 121);
   transition: color 0.25s;
 }
 
-.cliptable tr:hover td {
+.clipheader {
+  font-weight: bold;
+}
+
+.clip-row:hover {
   cursor: pointer;
   background-color: initial;
-  background-position: 0 0;
   color: rgb(255, 0, 0);
 }
 
-.cliptable th,
-tr {
-  text-align: center;
+.clipcell {
+  word-wrap: break-word; /* Ensure text wraps within cells */
 }
 
-.cliptable tr:last-child td {
-  border-bottom: none;
+.clipcell[colspan="4"] {
+  grid-column: span 4; /* Span all columns for "No History" */
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 480px) {
+  .clipheader, .clip-row {
+    grid-template-columns: 1fr 1fr; /* Reduce to 2 columns */
+    font-size: 1.5vh;
+    padding: 0.5vh 2vh;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .clipheader, .clip-row {
+    grid-template-columns: 1fr; /* Stack items vertically */
+    font-size: 1.2vh;
+    padding: 0.3vh 1vh;
+  }
 }
 
 .placeholdercolor::placeholder {
