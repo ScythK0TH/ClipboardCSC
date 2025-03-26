@@ -2,8 +2,8 @@
   position: absolute;
   max-width: 60vh;
   max-height: 100vh;
-  width: 50%;
-  height: 50%;
+  width: 90%; /* Adjusted for responsiveness */
+  height: auto; /* Allow height to adjust dynamically */
   background: rgba(185, 185, 185, 0.507); /* Semi-transparent background */
   border-radius: 10px;
   box-shadow: 0 1vh 2vh rgba(0, 0, 0, 0.2);
@@ -24,57 +24,61 @@
   visibility: hidden;
   opacity: 0;
   filter: blur(10px);
-  transition: all 0.5s;
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s; /* Safari support */
 }
 
 #login-container.show {
   visibility: visible;
   opacity: 1;
   filter: blur(0px);
-  transition: all 0.5s;
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s; /* Safari support */
 }
 
-#login-title {
-  font-size: 5vh;
-  font-weight: bolder;
-  transition: all 0.5s;
-  user-select: none;
-}
-
+#login-title,
 #rlogin-title {
   font-size: 5vh;
   font-weight: bolder;
-  transition: all 0.5s;
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s; /* Safari support */
   user-select: none;
+  text-align: center; /* Center align for better responsiveness */
 }
 
 #login-form {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%; /* Ensure form takes full width */
 }
 
 #username-input,
 #password-input,
 #cpassword-input {
   margin: 3vh;
+  width: 90%; /* Adjust width for responsiveness */
   user-select: none;
-  transition: all 0.5s;
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s; /* Safari support */
 }
 
 #remember-me {
   margin: 3vh;
   user-select: none;
-  transition: all 0.5s;
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s; /* Safari support */
 }
 
 #login-button {
   display: flex;
   justify-content: space-evenly;
+  width: 100%; /* Ensure buttons are responsive */
 }
 
 .transition-theme {
-  transition: all 0.5s;
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s; /* Safari support */
 }
 
 #tiny-container {
@@ -83,22 +87,7 @@
   width: 100%;
 }
 
-.tiny-button {
-  margin-right: 3vh;
-  margin-top: -1vh;
-  margin-bottom: 3vh;
-  text-align: center;
-  background: none;
-  border: none;
-  text-decoration: underline;
-  transition: all 0.5s;
-}
-
-.tiny-button:hover {
-  cursor: pointer;
-  color: #ff0000;
-}
-
+.tiny-button,
 .rtiny-button {
   margin-right: 3vh;
   margin-top: -1vh;
@@ -107,30 +96,40 @@
   background: none;
   border: none;
   text-decoration: underline;
-  transition: all 0.5s;
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s; /* Safari support */
 }
 
+.tiny-button:hover,
 .rtiny-button:hover {
   cursor: pointer;
   color: #ff0000;
 }
 
 @media screen and (max-width: 480px) {
+  #login-container {
+    padding: 3vh; /* Reduce padding for smaller screens */
+  }
+
+  #login-title,
   #rlogin-title {
     font-size: 4vh; /* Smaller size for mobile */
   }
 
-  #rusername-field,
-  #rpassword-field,
-  #rcpassword-field {
-    height: 3vh;
+  #username-input,
+  #password-input,
+  #cpassword-input {
+    margin: 2vh;
+    font-size: 1.5vh; /* Adjust font size for smaller screens */
+  }
+
+  #remember-me {
+    margin: 2vh;
     font-size: 1.5vh;
   }
 
-  .runame-label,
-  .rpass-label,
-  .rcpass-label,
+  .tiny-button,
   .rtiny-button {
-    font-size: 1.5vh;
+    font-size: 1.5vh; /* Adjust font size for smaller screens */
   }
 }
