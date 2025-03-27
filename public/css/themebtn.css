@@ -258,6 +258,8 @@ body.darkmode {
 
 .clipcell[colspan="4"] {
   grid-column: span 4; /* Span all columns for "No History" */
+  text-align: center; /* Align text to the center */
+  justify-self: center; /* Center the content within the grid cell */
 }
 
 /* Responsive adjustments */
