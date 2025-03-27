@@ -230,7 +230,7 @@ body.darkmode {
   border-radius: 1vh;
   overflow: hidden;
   width: 100%; /* Full width */
-  max-width: 75vh; /* Limit width */
+  max-width: 80vh; /* Limit width */
 }
 
 .clipheader, .clip-row {
