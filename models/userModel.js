@@ -1,7 +1,7 @@
 const fs = require('fs');
-const Encryption = require('../util');
+// const Encryption = require('../util');
 
-util = new Encryption();
+// util = new Encryption();
 
 class User {
   constructor() {
@@ -16,22 +16,24 @@ class User {
   // Get all Users
   getAllUsers() {
     //return this.Users;
-    return this.Users.map((User) => this.encryptUser(User));
+    // return this.Users.map((User) => this.encryptUser(User));
+    return this.Users;
   }
 
   searchByName(name) {
-    const foundUsers = this.Users
-      .filter((User) => User.name.toLowerCase().includes(name.toLowerCase()))
-      .map((User) => this.encryptUser(User));
+    const foundUsers = this.Users.filter((User) =>
+      User.name.toLowerCase().includes(name.toLowerCase())
+    );
+    // .map((User) => this.encryptUser(User));
     return foundUsers;
   }
 
-  encryptUser(User) {
-    return {
-      ...User,
-      username: util.encrypt(User.username),
-    };
-  }
+  // encryptUser(User) {
+  //   return {
+  //     ...User,
+  //     username: util.encrypt(User.username),
+  //   };
+  // }
 
   // Save Users to a file
   saveUsersToFile(filePath) {

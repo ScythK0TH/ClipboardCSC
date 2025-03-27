@@ -24,26 +24,30 @@ class Clip {
   }
 
   searchClipboardByName(name, user) {
+    if (!user) {
+      return [];
+    }
     if (!name) {
       return this.Clips.filter((Clip) => Clip.username === user);
     }
-    if (user) {
-      return this.Clips.filter(
-        (Clip) =>
-          Clip.title.toLowerCase().includes(name.toLowerCase()) &&
-          Clip.username === user
-      );
-    }
+    return this.Clips.filter(
+      (Clip) =>
+        Clip.title.toLowerCase().includes(name.toLowerCase()) &&
+        Clip.username === user
+    );
   }
 
-  sortAndSearchByName(name, user, isAscending = true) {
+  sortAndSearchByName(name, user, isAscending) {
     const filteredClips = this.searchClipboardByName(name, user);
     return filteredClips.sort((a, b) => {
       const nameA = a.title.toLowerCase();
       const nameB = b.title.toLowerCase();
-      if (nameA < nameB) return isAscending ? -1 : 1;
-      if (nameA > nameB) return isAscending ? 1 : -1;
-      return 0;
+  
+      // Use localeCompare for stable and consistent string comparison
+      const comparison = nameA.localeCompare(nameB);
+      
+      // Return based on ascending or descending order
+      return isAscending ? comparison : -comparison;
     });
   }
 
