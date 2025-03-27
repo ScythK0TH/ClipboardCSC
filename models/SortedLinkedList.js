@@ -12,18 +12,22 @@ class SortedLinkedList {
 
   // Insert a new node in sorted order (by ID)
   insert(data) {
-    const newNode = new Node(data);
     const sortKey = data.username ? 'username' : 'ID';
+    const newNode = { data, next: null };
 
-    if (!this.head || this.head.data[sortKey].toLowerCase() > data[sortKey].toLowerCase()) {
-      newNode.next = this.head;
-      this.head = newNode;
-      return;
+    const getComparableValue = (value) => {
+        return typeof value === 'string' ? value.toLowerCase() : value;
+    };
+
+    if (!this.head || getComparableValue(this.head.data[sortKey]) > getComparableValue(data[sortKey])) {
+        newNode.next = this.head;
+        this.head = newNode;
+        return;
     }
 
     let current = this.head;
-    while (current.next && current.next.data[sortKey].toLowerCase() <= data[sortKey].toLowerCase()) {
-      current = current.next;
+    while (current.next && getComparableValue(current.next.data[sortKey]) <= getComparableValue(data[sortKey])) {
+        current = current.next;
     }
 
     newNode.next = current.next;
@@ -85,4 +89,4 @@ class SortedLinkedList {
   }
 }
 
-module.exports = SortedLinkedList;
+module.exports = {SortedLinkedList, Node};

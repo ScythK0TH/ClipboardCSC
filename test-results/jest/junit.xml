@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="47" failures="0" errors="0" time="0.543">
+  <testsuite name="SortedLinkedList Tests" errors="0" failures="0" skipped="0" timestamp="2025-03-27T18:18:20" time="0.349" tests="24">
+    <testcase classname="SortedLinkedList Tests 1. Should insert a node into an empty list" name="SortedLinkedList Tests 1. Should insert a node into an empty list" time="0.001">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 2. Should insert a node at the beginning of the list" name="SortedLinkedList Tests 2. Should insert a node at the beginning of the list" time="0">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 3. Should insert a node in the middle of the list" name="SortedLinkedList Tests 3. Should insert a node in the middle of the list" time="0.001">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 4. Should insert a node at the end of the list" name="SortedLinkedList Tests 4. Should insert a node at the end of the list" time="0">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 5. Should remove the first node" name="SortedLinkedList Tests 5. Should remove the first node" time="0.001">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 6. Should handle removing the first node from an empty list" name="SortedLinkedList Tests 6. Should handle removing the first node from an empty list" time="0">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 7. Should remove the last node" name="SortedLinkedList Tests 7. Should remove the last node" time="0.001">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 8. Should handle removing the last node from an empty list" name="SortedLinkedList Tests 8. Should handle removing the last node from an empty list" time="0">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 9. Should remove a node by condition (match found)" name="SortedLinkedList Tests 9. Should remove a node by condition (match found)" time="0.001">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 10. Should handle removing a node by condition (no match found)" name="SortedLinkedList Tests 10. Should handle removing a node by condition (no match found)" time="0">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 11. Should handle removing a node by condition from an empty list" name="SortedLinkedList Tests 11. Should handle removing a node by condition from an empty list" time="0">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 12. Should convert the list to an array" name="SortedLinkedList Tests 12. Should convert the list to an array" time="0.001">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 13. Should handle converting an empty list to an array" name="SortedLinkedList Tests 13. Should handle converting an empty list to an array" time="0">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 14. Should insert nodes with a custom sort key (username)" name="SortedLinkedList Tests 14. Should insert nodes with a custom sort key (username)" time="0">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 15. Should insert nodes with a custom sort key (ID)" name="SortedLinkedList Tests 15. Should insert nodes with a custom sort key (ID)" time="0">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 16. Should handle inserting nodes with mixed sort keys" name="SortedLinkedList Tests 16. Should handle inserting nodes with mixed sort keys" time="0">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 17. Should handle removing the last node from a list with one node" name="SortedLinkedList Tests 17. Should handle removing the last node from a list with one node" time="0">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 18. Should handle inserting a node with no sort key" name="SortedLinkedList Tests 18. Should handle inserting a node with no sort key" time="0">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 19. Should handle inserting a node with missing sort key" name="SortedLinkedList Tests 19. Should handle inserting a node with missing sort key" time="0">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 20. Should handle removing the last node when there is only one node" name="SortedLinkedList Tests 20. Should handle removing the last node when there is only one node" time="0">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 21. Should maintain sorted order after multiple insertions and deletions" name="SortedLinkedList Tests 21. Should maintain sorted order after multiple insertions and deletions" time="0">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 22. Should create a Node with correct data and next as null" name="SortedLinkedList Tests 22. Should create a Node with correct data and next as null" time="0.001">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 23. Should handle calling removeLast on an empty list" name="SortedLinkedList Tests 23. Should handle calling removeLast on an empty list" time="0">
+    </testcase>
+    <testcase classname="SortedLinkedList Tests 24. Should remove the last node when the list has multiple nodes" name="SortedLinkedList Tests 24. Should remove the last node when the list has multiple nodes" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Clip Model Tests" errors="0" failures="0" skipped="0" timestamp="2025-03-27T18:18:20" time="0.09" tests="16">
+    <testcase classname="Clip Model Tests 1. Should add a new clip" name="Clip Model Tests 1. Should add a new clip" time="0.001">
+    </testcase>
+    <testcase classname="Clip Model Tests 2. Should get all clips" name="Clip Model Tests 2. Should get all clips" time="0">
+    </testcase>
+    <testcase classname="Clip Model Tests 3. Should get user-specific clips" name="Clip Model Tests 3. Should get user-specific clips" time="0">
+    </testcase>
+    <testcase classname="Clip Model Tests 4. Should search clips by name" name="Clip Model Tests 4. Should search clips by name" time="0">
+    </testcase>
+    <testcase classname="Clip Model Tests 5. Should return empty array when searching with no user" name="Clip Model Tests 5. Should return empty array when searching with no user" time="0">
+    </testcase>
+    <testcase classname="Clip Model Tests 6. Should delete the newest clip" name="Clip Model Tests 6. Should delete the newest clip" time="0">
+    </testcase>
+    <testcase classname="Clip Model Tests 7. Should delete the oldest clip" name="Clip Model Tests 7. Should delete the oldest clip" time="0">
+    </testcase>
+    <testcase classname="Clip Model Tests 8. Should delete a specific clip by title and username" name="Clip Model Tests 8. Should delete a specific clip by title and username" time="0.001">
+    </testcase>
+    <testcase classname="Clip Model Tests 9. Should save clips to a file" name="Clip Model Tests 9. Should save clips to a file" time="0">
+    </testcase>
+    <testcase classname="Clip Model Tests 10. Should load clips from a file" name="Clip Model Tests 10. Should load clips from a file" time="0.001">
+    </testcase>
+    <testcase classname="Clip Model Tests 11. Should handle loading from a non-existent file gracefully" name="Clip Model Tests 11. Should handle loading from a non-existent file gracefully" time="0">
+    </testcase>
+    <testcase classname="Clip Model Tests 12. Should sort all clips by name (A-Z)" name="Clip Model Tests 12. Should sort all clips by name (A-Z)" time="0.007">
+    </testcase>
+    <testcase classname="Clip Model Tests 13. Should handle deleting the newest clip when no clips exist" name="Clip Model Tests 13. Should handle deleting the newest clip when no clips exist" time="0">
+    </testcase>
+    <testcase classname="Clip Model Tests 14. Should handle deleting the oldest clip when no clips exist" name="Clip Model Tests 14. Should handle deleting the oldest clip when no clips exist" time="0.001">
+    </testcase>
+    <testcase classname="Clip Model Tests 15. Should handle deleting a specific clip when it does not exist" name="Clip Model Tests 15. Should handle deleting a specific clip when it does not exist" time="0">
+    </testcase>
+    <testcase classname="Clip Model Tests 16. Should return all clips for a user when searching with no title provided" name="Clip Model Tests 16. Should return all clips for a user when searching with no title provided" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="User Model Tests" errors="0" failures="0" skipped="0" timestamp="2025-03-27T18:18:20" time="0.052" tests="7">
+    <testcase classname="User Model Tests 1. Should add a new user" name="User Model Tests 1. Should add a new user" time="0">
+    </testcase>
+    <testcase classname="User Model Tests 2. Should get all users" name="User Model Tests 2. Should get all users" time="0">
+    </testcase>
+    <testcase classname="User Model Tests 3. Should search users by name" name="User Model Tests 3. Should search users by name" time="0">
+    </testcase>
+    <testcase classname="User Model Tests 4. Should return an empty array if no users match the search" name="User Model Tests 4. Should return an empty array if no users match the search" time="0">
+    </testcase>
+    <testcase classname="User Model Tests 5. Should save users to a file" name="User Model Tests 5. Should save users to a file" time="0.001">
+    </testcase>
+    <testcase classname="User Model Tests 6. Should load users from a file" name="User Model Tests 6. Should load users from a file" time="0">
+    </testcase>
+    <testcase classname="User Model Tests 7. Should handle loading from a non-existent file gracefully" name="User Model Tests 7. Should handle loading from a non-existent file gracefully" time="0">
+    </testcase>
+  </testsuite>
+</testsuites>

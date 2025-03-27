@@ -1,5 +1,5 @@
 const fs = require('fs');
-const SortedLinkedList = require('./SortedLinkedList');
+const { SortedLinkedList } = require('./SortedLinkedList');
 
 class Clip {
   constructor() {
