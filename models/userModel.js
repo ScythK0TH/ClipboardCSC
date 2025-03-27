@@ -1,50 +1,42 @@
 const fs = require('fs');
-// const Encryption = require('../util');
-
-// util = new Encryption();
+const SortedLinkedList = require('./SortedLinkedList');
 
 class User {
   constructor() {
-    this.Users = [];
+    this.Users = new SortedLinkedList();
   }
 
   // Add a new User
   addUser(User) {
-    this.Users.push(User);
+    this.Users.insert(User);
   }
 
   // Get all Users
   getAllUsers() {
-    //return this.Users;
-    // return this.Users.map((User) => this.encryptUser(User));
-    return this.Users;
+    return this.Users.toArray();
   }
 
   searchByName(name) {
-    const foundUsers = this.Users.filter((User) =>
+    const allUsers = this.Users.toArray();
+    const foundUsers = allUsers.filter((User) =>
       User.name.toLowerCase().includes(name.toLowerCase())
     );
-    // .map((User) => this.encryptUser(User));
     return foundUsers;
   }
 
-  // encryptUser(User) {
-  //   return {
-  //     ...User,
-  //     username: util.encrypt(User.username),
-  //   };
-  // }
-
   // Save Users to a file
   saveUsersToFile(filePath) {
-    fs.writeFileSync(filePath, JSON.stringify(this.Users, null, 2));
+    const usersArray = this.Users.toArray();
+    fs.writeFileSync(filePath, JSON.stringify(usersArray, null, 2));
   }
 
   // Load Users from a file
   loadUsersFromFile(filePath) {
     if (fs.existsSync(filePath)) {
       const data = fs.readFileSync(filePath);
-      this.Users = JSON.parse(data);
+      const usersArray = JSON.parse(data);
+      this.Users = new SortedLinkedList();
+      usersArray.forEach((user) => this.Users.insert(user));
     }
   }
 }

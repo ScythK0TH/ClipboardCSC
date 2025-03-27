@@ -1,11 +1,11 @@
 const path = require('path');
 const Clip = require('../models/clipModel');
 
-// Initialize the Task model
+// Initialize the Clip model
 const clipModel = new Clip();
 const clipsFilePath = path.join(__dirname, '../userclipboards.json');
 
-// Load tasks from file on app start
+// Load clips from file on app start
 clipModel.loadClipsFromFile(clipsFilePath);
 
 // Controller functions
@@ -31,18 +31,18 @@ exports.addClipboard = (req, res) => {
     return res.render('index', { clipnotfound: req.body.clipboard ? "Clipboard content is too long" : "Clipboard content is required" });
   }
 
-  if (!clipModel.Clips.some((clip) => clip.ID === clipboard.ID)) {
+  if (!clipModel.getAllClips().some((clip) => clip.ID === clipboard.ID)) {
     clipModel.addClip(clipboard);
     clipModel.saveClipsToFile(clipsFilePath);
   }
 
   const clips = req.session.user ? clipModel.getUserClips(req.session.user) : undefined;
   res.render('index', { clipid: clipboard.ID, userclip: clips });
-}
+};
 
 exports.retrieveClipboard = (req, res) => {
   const clipID = req.body.retrieveID;
-  const clip = clipModel.Clips.find((clip) => clip.ID == clipID);
+  const clip = clipModel.getAllClips().find((clip) => clip.ID == clipID);
   if (!clip) return res.render('index', { clipnotfound: "NO CLIPBOARD FOUND!!" });
 
   const userclip = req.session.user ? clipModel.getUserClips(req.session.user) : undefined;
@@ -53,7 +53,7 @@ exports.retrieveClipboard = (req, res) => {
     userclip, 
     clipuname: clip.username 
   });
-}
+};
 
 exports.updateClipboard = (req, res) => {
   const clipID = req.body.clipcid;
@@ -66,7 +66,7 @@ exports.updateClipboard = (req, res) => {
     return res.render('index', { clipnotfound: "Clipboard content is too long" });
   }
 
-  const clip = clipModel.Clips.find((clip) => clip.ID == clipID);
+  const clip = clipModel.getAllClips().find((clip) => clip.ID == clipID);
   if (!clip) {
     return res.render('index', { clipnotfound: "NO CLIPBOARD FOUND!!" });
   }
@@ -80,7 +80,7 @@ exports.updateClipboard = (req, res) => {
   clipModel.saveClipsToFile(clipsFilePath);
   const userclip = clipModel.getUserClips(req.session.user);
   res.render('index', { clipout: clip.description, cliptitle: clip.title, clipcurrentid: clip.ID, userclip: userclip, clipuname: clip.username });
-}
+};
 
 exports.deleteClipboard = (req, res) => {
   const { deleteIDs } = req.body;
@@ -90,49 +90,45 @@ exports.deleteClipboard = (req, res) => {
 
   const idsToDelete = Array.isArray(deleteIDs) ? deleteIDs : [deleteIDs];
   const unauthorized = idsToDelete.some((id) => {
-    const clip = clipModel.Clips.find((clip) => clip.ID == id);
+    const clip = clipModel.getAllClips().find((clip) => clip.ID == id);
     return !clip || req.session.user !== clip.username;
   });
 
   if (unauthorized) {
     return res.render('index', { clipnotfound: "You are not the owner of one or more selected clipboards", userclip: req.session.user ? clipModel.getUserClips(req.session.user) : undefined });
   }
-  clipModel.Clips = clipModel.Clips.filter((clip) => !idsToDelete.includes(clip.ID.toString()));
-  clipModel.saveClipsToFile(clipsFilePath);
 
+  idsToDelete.forEach((id) => {
+    const clip = clipModel.getAllClips().find((clip) => clip.ID == id);
+    if (clip) {
+      clipModel.deleteClip(clip.title, clip.username);
+    }
+  });
+
+  clipModel.saveClipsToFile(clipsFilePath);
   res.render('index', { userclip: req.session.user ? clipModel.getUserClips(req.session.user) : undefined });
 };
 
 exports.deleteNewestClipboard = (req, res) => {
-  user = req.session.user;
-  const userClips = clipModel.Clips.filter((clip) => clip.username === user);
-  if (!userClips.length || user !== userClips[userClips.length - 1].username) {
-    return res.render('index', { clipnotfound: "You are not the owner of this clipboard", userclip: req.session.user ? clipModel.getUserClips(req.session.user) : undefined });
-  }
-
+  const user = req.session.user;
   clipModel.deleteNewestClip(user);
   clipModel.saveClipsToFile(clipsFilePath);
   res.render('index', { userclip: req.session.user ? clipModel.getUserClips(req.session.user) : undefined });
-}
+};
 
 exports.deleteOldestClipboard = (req, res) => {
-  user = req.session.user;
-  const userClips = clipModel.Clips.filter((clip) => clip.username === user);
-  if (!userClips.length || user !== userClips[0].username) {
-    return res.render('index', { clipnotfound: "You are not the owner of this clipboard", userclip: req.session.user ? clipModel.getUserClips(req.session.user) : undefined });
-  }
-
+  const user = req.session.user;
   clipModel.deleteOldestClip(user);
   clipModel.saveClipsToFile(clipsFilePath);
   res.render('index', { userclip: req.session.user ? clipModel.getUserClips(req.session.user) : undefined });
-}
+};
 
 exports.searchClipboard = (req, res) => {
   const searchName = req.body.searchinput;
   const user = req.session.user;
   const foundClips = clipModel.searchClipboardByName(searchName, user);
   res.render('index', { userclip: foundClips, searchinput: searchName });
-}
+};
 
 exports.sortClipboard = (req, res) => {
   const searchName = req.body.searchinput;
@@ -145,6 +141,13 @@ exports.sortClipboard = (req, res) => {
     req.session.isAscending = !req.session.isAscending; // Toggle the sorting order
   }
 
-  const sortedClips = clipModel.sortAndSearchByName(searchName, user, req.session.isAscending);
+  const sortedClips = clipModel.searchClipboardByName(searchName, user).sort((a, b) => {
+    if (req.session.isAscending) {
+      return a.title.localeCompare(b.title);
+    } else {
+      return b.title.localeCompare(a.title);
+    }
+  });
+
   res.render('index', { userclip: sortedClips, searchinput: searchName });
 };

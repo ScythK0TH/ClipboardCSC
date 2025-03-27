@@ -1,39 +1,35 @@
-
 const Encryption = require('../util');
 const path = require('path');
 const User = require('../models/userModel');
 
-// Initialize the Task model
+// Initialize the User model
 const credentials = new User();
 const usersFilePath = path.join(__dirname, '../user.json');
 
 // Load users from file on app start
 credentials.loadUsersFromFile(usersFilePath);
 
-util = new Encryption();
-  
-  // Middleware to check authentication
-  exports.authenticate = (req, res, next) => {
-    if (req.session.user) {
-      next();
-    } else {
-      res.redirect('/login');
-    }
-  };
+const util = new Encryption();
 
+// Middleware to check authentication
+exports.authenticate = (req, res, next) => {
+  if (req.session.user) {
+    next();
+  } else {
+    res.redirect('/login');
+  }
+};
 
-  // Handle logout
-  exports.logout = (req, res) => {
-    req.session.destroy(() => {
-      console.log('User logged out');
-      res.redirect('/');
-    });
-  };
-  
+// Handle logout
+exports.logout = (req, res) => {
+  req.session.destroy(() => {
+    console.log('User logged out');
+    res.redirect('/');
+  });
+};
 
 // Show login page
 exports.showLoginPage = (req, res) => {
-  // Pass unsanitized error message from query parameters
   res.render('index', { error: req.query.error || null, registering: null, logining: true });
 };
 
@@ -45,20 +41,21 @@ exports.showRegisterPage = (req, res) => {
 // Handle registration
 exports.register = (req, res) => {
   const { username, password, cpassword } = req.body;
-  secret = util.encrypt(password);
+  const secret = util.encrypt(password);
+
   if (!username || !password || !cpassword) {
     const error = 'All fields are required';
     res.render('index', { regiserror: error, registering: true });
   } else if (username.length < 3) {
     const error = 'Username must be at least 3 characters';
     res.render('index', { regiserror: error, registering: true });
-  }else if (password !== cpassword) {
+  } else if (password !== cpassword) {
     const error = 'Passwords do not match';
     res.render('index', { regiserror: error, registering: true });
   } else if (password.length < 8) {
     const error = 'Password must be at least 8 characters';
     res.render('index', { regiserror: error, registering: true });
-  } else if (credentials.Users.some((user) => user.username === username)) {
+  } else if (credentials.getAllUsers().some((user) => user.username === username)) {
     const error = `Username: ${username} already exists`;
     res.render('index', { regiserror: error, registering: true });
   } else {
@@ -68,18 +65,21 @@ exports.register = (req, res) => {
   }
 };
 
-
 // Handle login
 exports.login = (req, res) => {
   const { username, password } = req.body;
-  secret = util.encrypt(password);
-  if (credentials.Users.some((user) => user.username === username) && credentials.Users.some((user) => user.password === secret)) {
+  const secret = util.encrypt(password);
+
+  const user = credentials.getAllUsers().find(
+    (user) => user.username === username && user.password === secret
+  );
+
+  if (user) {
     req.session.user = username;
-    console.log(username + " has logged in");
+    console.log(`${username} has logged in`);
     res.redirect('/');
   } else {
-    // Reflect the unsanitized username in the error message
-    const error = `Invalid credentials for username: ${username}`;
+    const error = `Invalid credentials`;
     res.render('index', { loginerror: error, registering: null, logining: true });
   }
 };
