@@ -42,18 +42,18 @@ describe('Clip Model Tests', () => {
     expect(result).toEqual([]);
   });
 
-  test('6. Should delete the newest clip', () => {
+  test('6. Should delete the last clip', () => {
     clipManager.addClip({ title: 'Old Clip', username: 'user1' });
     clipManager.addClip({ title: 'New Clip', username: 'user1' });
-    clipManager.deleteNewestClip('user1');
-    expect(clipManager.getUserClips('user1')[0].title).toBe('Old Clip');
-  });
+    clipManager.deleteLastClip('user1');
+    expect(clipManager.getUserClips('user1')[0].title).toBe('New Clip'); // Old Clip remains
+  });  
 
-  test('7. Should delete the oldest clip', () => {
+  test('7. Should delete the first clip', () => {
     clipManager.addClip({ title: 'Old Clip', username: 'user1' });
     clipManager.addClip({ title: 'New Clip', username: 'user1' });
-    clipManager.deleteOldestClip('user1');
-    expect(clipManager.getUserClips('user1')[0].title).toBe('New Clip');
+    clipManager.deleteFirstClip('user1');
+    expect(clipManager.getUserClips('user1')[0].title).toBe('Old Clip'); // New Clip remains
   });
 
   test('8. Should delete a specific clip by title and username', () => {
@@ -61,7 +61,7 @@ describe('Clip Model Tests', () => {
     clipManager.addClip({ title: 'Clip 2', username: 'user2' });
     clipManager.deleteClip('Clip 1', 'user1');
     expect(clipManager.getAllClips()).toHaveLength(1);
-    expect(clipManager.getAllClips()[0].title).toBe('Clip 2');
+    expect(clipManager.getAllClips()[0].title).toBe('Clip 2'); // Clip 2 remains
   });
 
   test('9. Should save clips to a file', () => {
@@ -84,21 +84,21 @@ describe('Clip Model Tests', () => {
     expect(clipManager.getAllClips()).toHaveLength(0);
   });
 
-  test('12. Should sort all clips by name (A-Z)', () => {
+  test('12. Should sort all clips by title (A-Z)', () => {
     clipManager.addClip({ title: 'Zebra', username: 'user1' });
     clipManager.addClip({ title: 'Apple', username: 'user2' });
-    const sortedClips = clipManager.getAllClips().sort((a, b) => a.title.localeCompare(b.title));
-    expect(sortedClips[0].title).toBe('Apple');
-    expect(sortedClips[1].title).toBe('Zebra');
+    const sortedClips = clipManager.getAllClips();
+    expect(sortedClips[0].title).toBe('Apple'); // Alphabetically first
+    expect(sortedClips[1].title).toBe('Zebra'); // Alphabetically last
   });
 
-  test('13. Should handle deleting the newest clip when no clips exist', () => {
-    clipManager.deleteNewestClip('user1');
+  test('13. Should handle deleting the last clip when no clips exist', () => {
+    clipManager.deleteLastClip('user1');
     expect(clipManager.getAllClips()).toHaveLength(0);
   });
 
-  test('14. Should handle deleting the oldest clip when no clips exist', () => {
-    clipManager.deleteOldestClip('user1');
+  test('14. Should handle deleting the first clip when no clips exist', () => {
+    clipManager.deleteFirstClip('user1');
     expect(clipManager.getAllClips()).toHaveLength(0);
   });
 
@@ -113,7 +113,7 @@ describe('Clip Model Tests', () => {
     clipManager.addClip({ title: 'Another Clip', username: 'user1' });
     const result = clipManager.searchClipboardByName('', 'user1');
     expect(result).toHaveLength(2);
-    expect(result[0].title).toBe('Important Clip');
-    expect(result[1].title).toBe('Another Clip');
+    expect(result[0].title).toBe('Another Clip'); // Sorted alphabetically
+    expect(result[1].title).toBe('Important Clip');
   });
 });

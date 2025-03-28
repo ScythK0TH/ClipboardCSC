@@ -111,16 +111,16 @@ exports.deleteClipboard = (req, res) => {
   res.render('index', { userclip: req.session.user ? clipModel.getUserClips(req.session.user) : undefined });
 };
 
-exports.deleteNewestClipboard = (req, res) => {
+exports.deleteFirstClipboard = (req, res) => {
   const user = req.session.user;
-  clipModel.deleteNewestClip(user);
+  clipModel.deleteFirstClip(user);
   clipModel.saveClipsToFile(clipsFilePath);
   res.render('index', { userclip: req.session.user ? clipModel.getUserClips(req.session.user) : undefined });
 };
 
-exports.deleteOldestClipboard = (req, res) => {
+exports.deleteLastClipboard = (req, res) => {
   const user = req.session.user;
-  clipModel.deleteOldestClip(user);
+  clipModel.deleteLastClip(user);
   clipModel.saveClipsToFile(clipsFilePath);
   res.render('index', { userclip: req.session.user ? clipModel.getUserClips(req.session.user) : undefined });
 };
@@ -138,7 +138,7 @@ exports.sortClipboard = (req, res) => {
 
   // Toggle sorting order
   if (req.session.isAscending === undefined) {
-    req.session.isAscending = true; // Default to ascending on the first click
+    req.session.isAscending = false; // Default to ascending on the first click
   } else {
     req.session.isAscending = !req.session.isAscending; // Toggle the sorting order
   }

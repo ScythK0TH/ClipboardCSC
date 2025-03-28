@@ -33,24 +33,24 @@ class Clip {
     );
   }
 
-  // Delete the newest Clip (last in the list)
-  deleteNewestClip(user) {
+  // Delete the last Clip (last in the list)
+  deleteLastClip(user) {
     const userClips = this.getUserClips(user);
     if (userClips.length > 0) {
-      const newestClip = userClips[userClips.length - 1];
+      const lastClip = userClips[userClips.length - 1];
       this.Clips.removeByCondition(
-        (clip) => clip.title === newestClip.title && clip.username === user
+        (clip) => clip.title === lastClip.title && clip.username === user
       );
     }
   }
 
-  // Delete the oldest Clip (first in the list)
-  deleteOldestClip(user) {
+  // Delete the first Clip (first in the list)
+  deleteFirstClip(user) {
     const userClips = this.getUserClips(user);
     if (userClips.length > 0) {
-      const oldestClip = userClips[0];
+      const firstClip = userClips[0];
       this.Clips.removeByCondition(
-        (clip) => clip.title === oldestClip.title && clip.username === user
+        (clip) => clip.title === firstClip.title && clip.username === user
       );
     }
   }

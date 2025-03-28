@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="87" lines-covered="87" line-rate="1" branches-valid="46" branches-covered="46" branch-rate="1" timestamp="1743099500681" complexity="0" version="0.1">
+<coverage lines-valid="87" lines-covered="87" line-rate="1" branches-valid="46" branches-covered="46" branch-rate="1" timestamp="1743132053611" complexity="0" version="0.1">
   <sources>
     <source>D:\Workstation\SE\Project\P2V5_TEST</source>
   </sources>
@@ -9,9 +9,9 @@
       <classes>
         <class name="SortedLinkedList.js" filename="models\SortedLinkedList.js" line-rate="1" branch-rate="1">
           <methods>
-            <method name="(anonymous_0)" hits="1" signature="()V">
+            <method name="(anonymous_0)" hits="65" signature="()V">
               <lines>
-                <line number="2" hits="1"/>
+                <line number="2" hits="65"/>
               </lines>
             </method>
             <method name="(anonymous_1)" hits="48" signature="()V">
@@ -51,22 +51,22 @@
             </method>
           </methods>
           <lines>
-            <line number="3" hits="1" branch="false"/>
-            <line number="4" hits="1" branch="false"/>
+            <line number="3" hits="65" branch="false"/>
+            <line number="4" hits="65" branch="false"/>
             <line number="10" hits="48" branch="false"/>
             <line number="15" hits="64" branch="true" condition-coverage="100% (2/2)"/>
             <line number="16" hits="64" branch="false"/>
             <line number="18" hits="64" branch="false"/>
             <line number="19" hits="60" branch="true" condition-coverage="100% (2/2)"/>
             <line number="22" hits="64" branch="true" condition-coverage="100% (4/4)"/>
-            <line number="23" hits="41" branch="false"/>
-            <line number="24" hits="41" branch="false"/>
-            <line number="25" hits="41" branch="false"/>
-            <line number="28" hits="23" branch="false"/>
-            <line number="29" hits="23" branch="true" condition-coverage="100% (2/2)"/>
-            <line number="30" hits="2" branch="false"/>
-            <line number="33" hits="23" branch="false"/>
-            <line number="34" hits="23" branch="false"/>
+            <line number="23" hits="46" branch="false"/>
+            <line number="24" hits="46" branch="false"/>
+            <line number="25" hits="46" branch="false"/>
+            <line number="28" hits="18" branch="false"/>
+            <line number="29" hits="18" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="30" hits="1" branch="false"/>
+            <line number="33" hits="18" branch="false"/>
+            <line number="34" hits="18" branch="false"/>
             <line number="39" hits="2" branch="true" condition-coverage="100% (2/2)"/>
             <line number="40" hits="1" branch="false"/>
             <line number="46" hits="6" branch="true" condition-coverage="100% (2/2)"/>

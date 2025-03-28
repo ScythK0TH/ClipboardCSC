@@ -12,8 +12,8 @@ class SortedLinkedList {
 
   // Insert a new node in sorted order (by ID)
   insert(data) {
-    const sortKey = data.username ? 'username' : 'ID';
-    const newNode = { data, next: null };
+    const sortKey = data.title ? 'title' : 'username';
+    const newNode = new Node(data);
 
     const getComparableValue = (value) => {
         return typeof value === 'string' ? value.toLowerCase() : value;

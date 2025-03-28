@@ -66,8 +66,8 @@ app.post('/add', pageController.addClipboard);
 app.post('/retrieve', pageController.retrieveClipboard);
 app.post('/update', pageController.updateClipboard);
 app.post('/delete', pageController.deleteClipboard);
-app.get('/delete/newest', pageController.deleteNewestClipboard);
-app.get('/delete/oldest', pageController.deleteOldestClipboard);
+app.get('/delete/first', pageController.deleteFirstClipboard);
+app.get('/delete/last', pageController.deleteLastClipboard);
 
 // Sort and search
 app.post('/search', pageController.searchClipboard);

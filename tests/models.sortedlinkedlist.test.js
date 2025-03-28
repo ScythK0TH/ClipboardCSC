@@ -8,32 +8,32 @@ describe('SortedLinkedList Tests', () => {
   });
 
   test('1. Should insert a node into an empty list', () => {
-    const data = { ID: 1079, username: 'Anonymous', title: 'Hello', description: 'Hello' };
+    const data = { title: 'Hello', username: 'Anonymous', description: 'Hello' };
     list.insert(data);
     expect(list.toArray()).toEqual([data]);
   });
-
+  
   test('2. Should insert a node at the beginning of the list', () => {
-    const data1 = { ID: 2131, username: 'Anonymous', title: 'Hello', description: 'Hello' };
-    const data2 = { ID: 1079, username: 'Anonymous', title: 'Hello', description: 'Hello' }; // Should come before data1
+    const data1 = { title: 'Zebra', username: 'Anonymous', description: 'Hello' };
+    const data2 = { title: 'Apple', username: 'Anonymous', description: 'Hello' }; // Should come before data1
     list.insert(data1);
     list.insert(data2);
-    expect(list.toArray()).toEqual([data1, data2]); // Adjusted expectation
+    expect(list.toArray()).toEqual([data2, data1]);
   });
-
+  
   test('3. Should insert a node in the middle of the list', () => {
-    const data1 = { ID: 1079, username: 'Anonymous', title: 'Hello', description: 'Hello' };
-    const data2 = { ID: 7119, username: 'Anonymous', title: 'Test', description: 'Test' };
-    const data3 = { ID: 2131, username: 'Anonymous', title: 'Hello', description: 'Hello' }; // Should go between data1 and data2
+    const data1 = { title: 'Apple', username: 'Anonymous', description: 'Hello' };
+    const data2 = { title: 'Zebra', username: 'Anonymous', description: 'Test' };
+    const data3 = { title: 'Mango', username: 'Anonymous', description: 'Hello' }; // Should go between data1 and data2
     list.insert(data1);
     list.insert(data2);
     list.insert(data3);
-    expect(list.toArray()).toEqual([data1, data2, data3]); // Adjusted expectation
+    expect(list.toArray()).toEqual([data1, data3, data2]);
   });
 
   test('4. Should insert a node at the end of the list', () => {
-    const data1 = { ID: 1079, username: 'Anonymous', title: 'Hello', description: 'Hello' };
-    const data2 = { ID: 2131, username: 'Anonymous', title: 'Hello', description: 'Hello' };
+    const data1 = { title: 'Apple', username: 'Anonymous', description: 'Hello' };
+    const data2 = { title: 'Zebra', username: 'Anonymous', description: 'Hello' };
     list.insert(data1);
     list.insert(data2);
     expect(list.toArray()).toEqual([data1, data2]);
@@ -101,27 +101,27 @@ describe('SortedLinkedList Tests', () => {
   });
 
   test('14. Should insert nodes with a custom sort key (username)', () => {
-    const data1 = { username: 'zebra', ID: 1 };
-    const data2 = { username: 'apple', ID: 2 }; // Should come before data1
+    const data1 = { title: 'Zebra', username: 'zebra' };
+    const data2 = { title: 'Apple', username: 'apple' }; // Should come before data1
     list.insert(data1);
     list.insert(data2);
     expect(list.toArray()).toEqual([data2, data1]);
   });
-
-  test('15. Should insert nodes with a custom sort key (ID)', () => {
-    const data1 = { ID: 2, username: 'Anonymous' };
-    const data2 = { ID: 1, username: 'Anonymous' }; // Should come before data1
+  
+  test('15. Should insert nodes with a custom sort key (title)', () => {
+    const data1 = { title: 'Zebra', username: 'Anonymous' };
+    const data2 = { title: 'Apple', username: 'Anonymous' }; // Should come before data1
     list.insert(data1);
     list.insert(data2);
-    expect(list.toArray()).toEqual([data1, data2]); // Adjusted expectation
+    expect(list.toArray()).toEqual([data2, data1]);
   });
-
+  
   test('16. Should handle inserting nodes with mixed sort keys', () => {
-    const data1 = { username: 'zebra', ID: 2 };
-    const data2 = { username: 'apple', ID: 1 }; // Should come before data1 based on username
+    const data1 = { title: 'Zebra', username: 'zebra' };
+    const data2 = { title: 'Apple', username: 'apple' }; // Should come before data1 based on title
     list.insert(data1);
     list.insert(data2);
-    expect(list.toArray()).toEqual([data2, data1]); // Adjusted expectation
+    expect(list.toArray()).toEqual([data2, data1]);
   });
 
   test('17. Should handle removing the last node from a list with one node', () => {
@@ -136,7 +136,7 @@ describe('SortedLinkedList Tests', () => {
     const data2 = { ID: 1 }; // No username, should come before data1
     list.insert(data1);
     list.insert(data2);
-    expect(list.toArray()).toEqual([data2, data1]);
+    expect(list.toArray()).toEqual([data1, data2]);
   });
 
   test('19. Should handle inserting a node with missing sort key', () => {
