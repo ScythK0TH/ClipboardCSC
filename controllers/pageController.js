@@ -34,6 +34,8 @@ exports.addClipboard = (req, res) => {
   if (!clipModel.getAllClips().some((clip) => clip.ID === clipboard.ID)) {
     clipModel.addClip(clipboard);
     clipModel.saveClipsToFile(clipsFilePath);
+  } else {
+    this.addClipboard(req, res);
   }
 
   const clips = req.session.user ? clipModel.getUserClips(req.session.user) : undefined;
