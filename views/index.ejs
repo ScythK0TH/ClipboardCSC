@@ -225,7 +225,7 @@
     <% if (typeof clipid !== 'undefined' && clipid) { %>
     <div id="id-container">
       <div id="title-back">
-        <span style="text-align: center">ID: <%= clipid %></span>
+        <span id="idofclip" style="text-align: center">ID: <%= clipid %></span>
       </div>
     </div>
     <% } %> 
@@ -391,7 +391,7 @@
     <div id="title">
       <div id="title-front"><span style="text-align: center">WELCOME</span></div>
       <div id="title-back">
-        <span style="text-align: center;"><%= user.toUpperCase()+"!!" %></span>
+        <span id="usertitle" style="text-align: center;"><%= user.toUpperCase()+"!!" %></span>
       </div>
     </div>
     <form method="POST">

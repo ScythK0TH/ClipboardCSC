@@ -31,7 +31,11 @@
     "crypto": "^1.0.1",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
-    "express-session": "^1.18.1",
+    "express-session": "^1.18.1"
+  },
+  "devDependencies": {
+    "chromedriver": "^123.0.1",
+    "selenium-webdriver": "^4.19.0",
     "jest-junit": "^16.0.0"
   }
 }
