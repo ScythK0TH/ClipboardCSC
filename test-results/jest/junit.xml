@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="50" failures="0" errors="0" time="7.645">
-  <testsuite name="SortedLinkedList Tests" errors="0" failures="0" skipped="0" timestamp="2025-04-02T10:47:47" time="0.351" tests="24">
-    <testcase classname="SortedLinkedList Tests 1. Should insert a node into an empty list" name="SortedLinkedList Tests 1. Should insert a node into an empty list" time="0.006">
+<testsuites name="jest tests" tests="53" failures="0" errors="0" time="23.145">
+  <testsuite name="SortedLinkedList Tests" errors="0" failures="0" skipped="0" timestamp="2025-04-16T17:28:14" time="0.346" tests="24">
+    <testcase classname="SortedLinkedList Tests 1. Should insert a node into an empty list" name="SortedLinkedList Tests 1. Should insert a node into an empty list" time="0.005">
     </testcase>
     <testcase classname="SortedLinkedList Tests 2. Should insert a node at the beginning of the list" name="SortedLinkedList Tests 2. Should insert a node at the beginning of the list" time="0">
     </testcase>
-    <testcase classname="SortedLinkedList Tests 3. Should insert a node in the middle of the list" name="SortedLinkedList Tests 3. Should insert a node in the middle of the list" time="0.001">
+    <testcase classname="SortedLinkedList Tests 3. Should insert a node in the middle of the list" name="SortedLinkedList Tests 3. Should insert a node in the middle of the list" time="0">
     </testcase>
     <testcase classname="SortedLinkedList Tests 4. Should insert a node at the end of the list" name="SortedLinkedList Tests 4. Should insert a node at the end of the list" time="0">
     </testcase>
-    <testcase classname="SortedLinkedList Tests 5. Should remove the first node" name="SortedLinkedList Tests 5. Should remove the first node" time="0">
+    <testcase classname="SortedLinkedList Tests 5. Should remove the first node" name="SortedLinkedList Tests 5. Should remove the first node" time="0.001">
     </testcase>
-    <testcase classname="SortedLinkedList Tests 6. Should handle removing the first node from an empty list" name="SortedLinkedList Tests 6. Should handle removing the first node from an empty list" time="0.001">
+    <testcase classname="SortedLinkedList Tests 6. Should handle removing the first node from an empty list" name="SortedLinkedList Tests 6. Should handle removing the first node from an empty list" time="0">
     </testcase>
     <testcase classname="SortedLinkedList Tests 7. Should remove the last node" name="SortedLinkedList Tests 7. Should remove the last node" time="0">
     </testcase>
@@ -23,13 +23,13 @@
     </testcase>
     <testcase classname="SortedLinkedList Tests 11. Should handle removing a node by condition from an empty list" name="SortedLinkedList Tests 11. Should handle removing a node by condition from an empty list" time="0">
     </testcase>
-    <testcase classname="SortedLinkedList Tests 12. Should convert the list to an array" name="SortedLinkedList Tests 12. Should convert the list to an array" time="0.001">
+    <testcase classname="SortedLinkedList Tests 12. Should convert the list to an array" name="SortedLinkedList Tests 12. Should convert the list to an array" time="0">
     </testcase>
-    <testcase classname="SortedLinkedList Tests 13. Should handle converting an empty list to an array" name="SortedLinkedList Tests 13. Should handle converting an empty list to an array" time="0">
+    <testcase classname="SortedLinkedList Tests 13. Should handle converting an empty list to an array" name="SortedLinkedList Tests 13. Should handle converting an empty list to an array" time="0.001">
     </testcase>
     <testcase classname="SortedLinkedList Tests 14. Should insert nodes with a custom sort key (username)" name="SortedLinkedList Tests 14. Should insert nodes with a custom sort key (username)" time="0">
     </testcase>
-    <testcase classname="SortedLinkedList Tests 15. Should insert nodes with a custom sort key (title)" name="SortedLinkedList Tests 15. Should insert nodes with a custom sort key (title)" time="0.001">
+    <testcase classname="SortedLinkedList Tests 15. Should insert nodes with a custom sort key (title)" name="SortedLinkedList Tests 15. Should insert nodes with a custom sort key (title)" time="0">
     </testcase>
     <testcase classname="SortedLinkedList Tests 16. Should handle inserting nodes with mixed sort keys" name="SortedLinkedList Tests 16. Should handle inserting nodes with mixed sort keys" time="0">
     </testcase>
@@ -50,44 +50,44 @@
     <testcase classname="SortedLinkedList Tests 24. Should remove the last node when the list has multiple nodes" name="SortedLinkedList Tests 24. Should remove the last node when the list has multiple nodes" time="0">
     </testcase>
   </testsuite>
-  <testsuite name="User Model Tests" errors="0" failures="0" skipped="0" timestamp="2025-04-02T10:47:47" time="0.353" tests="7">
-    <testcase classname="User Model Tests 1. Should add a new user" name="User Model Tests 1. Should add a new user" time="0.007">
+  <testsuite name="User Model Tests" errors="0" failures="0" skipped="0" timestamp="2025-04-16T17:28:14" time="0.349" tests="7">
+    <testcase classname="User Model Tests 1. Should add a new user" name="User Model Tests 1. Should add a new user" time="0.006">
     </testcase>
-    <testcase classname="User Model Tests 2. Should get all users" name="User Model Tests 2. Should get all users" time="0">
+    <testcase classname="User Model Tests 2. Should get all users" name="User Model Tests 2. Should get all users" time="0.001">
     </testcase>
-    <testcase classname="User Model Tests 3. Should search users by name" name="User Model Tests 3. Should search users by name" time="0.001">
+    <testcase classname="User Model Tests 3. Should search users by name" name="User Model Tests 3. Should search users by name" time="0">
     </testcase>
     <testcase classname="User Model Tests 4. Should return an empty array if no users match the search" name="User Model Tests 4. Should return an empty array if no users match the search" time="0">
     </testcase>
-    <testcase classname="User Model Tests 5. Should save users to a file" name="User Model Tests 5. Should save users to a file" time="0.001">
+    <testcase classname="User Model Tests 5. Should save users to a file" name="User Model Tests 5. Should save users to a file" time="0">
     </testcase>
-    <testcase classname="User Model Tests 6. Should load users from a file" name="User Model Tests 6. Should load users from a file" time="0">
+    <testcase classname="User Model Tests 6. Should load users from a file" name="User Model Tests 6. Should load users from a file" time="0.001">
     </testcase>
     <testcase classname="User Model Tests 7. Should handle loading from a non-existent file gracefully" name="User Model Tests 7. Should handle loading from a non-existent file gracefully" time="0">
     </testcase>
   </testsuite>
-  <testsuite name="Clip Model Tests" errors="0" failures="0" skipped="0" timestamp="2025-04-02T10:47:47" time="0.357" tests="16">
-    <testcase classname="Clip Model Tests 1. Should add a new clip" name="Clip Model Tests 1. Should add a new clip" time="0.007">
+  <testsuite name="Clip Model Tests" errors="0" failures="0" skipped="0" timestamp="2025-04-16T17:28:14" time="0.355" tests="16">
+    <testcase classname="Clip Model Tests 1. Should add a new clip" name="Clip Model Tests 1. Should add a new clip" time="0.006">
     </testcase>
     <testcase classname="Clip Model Tests 2. Should get all clips" name="Clip Model Tests 2. Should get all clips" time="0">
     </testcase>
-    <testcase classname="Clip Model Tests 3. Should get user-specific clips" name="Clip Model Tests 3. Should get user-specific clips" time="0.001">
+    <testcase classname="Clip Model Tests 3. Should get user-specific clips" name="Clip Model Tests 3. Should get user-specific clips" time="0">
     </testcase>
-    <testcase classname="Clip Model Tests 4. Should search clips by name" name="Clip Model Tests 4. Should search clips by name" time="0">
+    <testcase classname="Clip Model Tests 4. Should search clips by name" name="Clip Model Tests 4. Should search clips by name" time="0.001">
     </testcase>
     <testcase classname="Clip Model Tests 5. Should return empty array when searching with no user" name="Clip Model Tests 5. Should return empty array when searching with no user" time="0">
     </testcase>
-    <testcase classname="Clip Model Tests 6. Should delete the last clip" name="Clip Model Tests 6. Should delete the last clip" time="0.001">
+    <testcase classname="Clip Model Tests 6. Should delete the last clip" name="Clip Model Tests 6. Should delete the last clip" time="0">
     </testcase>
-    <testcase classname="Clip Model Tests 7. Should delete the first clip" name="Clip Model Tests 7. Should delete the first clip" time="0">
+    <testcase classname="Clip Model Tests 7. Should delete the first clip" name="Clip Model Tests 7. Should delete the first clip" time="0.001">
     </testcase>
     <testcase classname="Clip Model Tests 8. Should delete a specific clip by title and username" name="Clip Model Tests 8. Should delete a specific clip by title and username" time="0">
     </testcase>
-    <testcase classname="Clip Model Tests 9. Should save clips to a file" name="Clip Model Tests 9. Should save clips to a file" time="0.001">
+    <testcase classname="Clip Model Tests 9. Should save clips to a file" name="Clip Model Tests 9. Should save clips to a file" time="0">
     </testcase>
     <testcase classname="Clip Model Tests 10. Should load clips from a file" name="Clip Model Tests 10. Should load clips from a file" time="0">
     </testcase>
-    <testcase classname="Clip Model Tests 11. Should handle loading from a non-existent file gracefully" name="Clip Model Tests 11. Should handle loading from a non-existent file gracefully" time="0.001">
+    <testcase classname="Clip Model Tests 11. Should handle loading from a non-existent file gracefully" name="Clip Model Tests 11. Should handle loading from a non-existent file gracefully" time="0">
     </testcase>
     <testcase classname="Clip Model Tests 12. Should sort all clips by title (A-Z)" name="Clip Model Tests 12. Should sort all clips by title (A-Z)" time="0">
     </testcase>
@@ -100,12 +100,18 @@
     <testcase classname="Clip Model Tests 16. Should return all clips for a user when searching with no title provided" name="Clip Model Tests 16. Should return all clips for a user when searching with no title provided" time="0">
     </testcase>
   </testsuite>
-  <testsuite name="UI Test" errors="0" failures="0" skipped="0" timestamp="2025-04-02T10:47:47" time="7.462" tests="3">
-    <testcase classname="UI Test Check if the clipboard output matches the input sent by the user" name="UI Test Check if the clipboard output matches the input sent by the user" time="1.993">
+  <testsuite name="UI Test" errors="0" failures="0" skipped="0" timestamp="2025-04-16T17:28:14" time="22.968" tests="6">
+    <testcase classname="UI Test Check if the clipboard output matches the input sent by the user" name="UI Test Check if the clipboard output matches the input sent by the user" time="2.163">
     </testcase>
-    <testcase classname="UI Test Check if the login is functional and if the username matches the one the user is logging in with" name="UI Test Check if the login is functional and if the username matches the one the user is logging in with" time="2.014">
+    <testcase classname="UI Test Check if the login is functional and if the username matches the one the user is logging in with" name="UI Test Check if the login is functional and if the username matches the one the user is logging in with" time="2.077">
     </testcase>
-    <testcase classname="UI Test Check if the clipboard after user login is stored inside the user&apos;s clipboard storage" name="UI Test Check if the clipboard after user login is stored inside the user&apos;s clipboard storage" time="2.966">
+    <testcase classname="UI Test Check if the clipboard after user login is stored inside the user&apos;s clipboard storage" name="UI Test Check if the clipboard after user login is stored inside the user&apos;s clipboard storage" time="3.073">
+    </testcase>
+    <testcase classname="UI Test Check if the registration process works correctly" name="UI Test Check if the registration process works correctly" time="2.253">
+    </testcase>
+    <testcase classname="UI Test Check if editing clipboard content works correctly" name="UI Test Check if editing clipboard content works correctly" time="7.861">
+    </testcase>
+    <testcase classname="UI Test Check if deleting clipboard works correctly" name="UI Test Check if deleting clipboard works correctly" time="5.061">
     </testcase>
   </testsuite>
 </testsuites>
