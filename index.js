@@ -1,11 +1,15 @@
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
+const connectDB = require('./config/database');
 const pageController = require('./controllers/pageController');
 const authController = require('./controllers/authController');
 
 // Initialize Express app
 const app = express();
+
+// Connect to MongoDB
+connectDB();
 // Set EJS as the templating engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));

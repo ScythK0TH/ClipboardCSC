@@ -1,42 +1,54 @@
-const fs = require('fs');
-const { SortedLinkedList } = require('./SortedLinkedList');
+const mongoose = require('mongoose');
+
+// Define the User Schema
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true, unique: true },
+  name: { type: String, default: function() { return this.username } },
+  password: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now }
+});
+
+// Create the User model
+const UserModel = mongoose.model('User', userSchema);
 
 class User {
-  constructor() {
-    this.Users = new SortedLinkedList();
-  }
-
   // Add a new User
-  addUser(User) {
-    this.Users.insert(User);
+  async addUser(user) {
+    try {
+      const newUser = new UserModel(user);
+      await newUser.save();
+      return newUser;
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Get all Users
-  getAllUsers() {
-    return this.Users.toArray();
+  async getAllUsers() {
+    try {
+      return await UserModel.find().sort({ username: 1 });
+    } catch (error) {
+      throw error;
+    }
   }
 
-  searchByName(name) {
-    const allUsers = this.Users.toArray();
-    const foundUsers = allUsers.filter((User) =>
-      User.name.toLowerCase().includes(name.toLowerCase())
-    );
-    return foundUsers;
+  // Search users by name
+  async searchByName(name) {
+    try {
+      return await UserModel.find({
+        name: { $regex: name, $options: 'i' }
+      }).sort({ username: 1 });
+    } catch (error) {
+      throw error;
+    }
   }
 
-  // Save Users to a file
-  saveUsersToFile(filePath) {
-    const usersArray = this.Users.toArray();
-    fs.writeFileSync(filePath, JSON.stringify(usersArray, null, 2));
-  }
-
-  // Load Users from a file
-  loadUsersFromFile(filePath) {
-    if (fs.existsSync(filePath)) {
-      const data = fs.readFileSync(filePath);
-      const usersArray = JSON.parse(data);
-      this.Users = new SortedLinkedList();
-      usersArray.forEach((user) => this.Users.insert(user));
+  // Find user by username
+  async findByUsername(username) {
+    try {
+      return await UserModel.findOne({ username });
+    } catch (error) {
+      throw error;
     }
   }
 }

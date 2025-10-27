@@ -4,10 +4,6 @@ const User = require('../models/userModel');
 
 // Initialize the User model
 const credentials = new User();
-const usersFilePath = path.join(__dirname, '../user.json');
-
-// Load users from file on app start
-credentials.loadUsersFromFile(usersFilePath);
 
 const util = new Encryption();
 
@@ -39,48 +35,65 @@ exports.showRegisterPage = (req, res) => {
 };
 
 // Handle registration
-exports.register = (req, res) => {
-  const { username, password, cpassword } = req.body;
-  const secret = util.encrypt(password);
+exports.register = async (req, res) => {
+  try {
+    const { username, password, cpassword } = req.body;
+    const secret = util.encrypt(password);
 
-  if (!username || !password || !cpassword) {
-    const error = 'All fields are required';
-    res.render('index', { regiserror: error, registering: true });
-  } else if (username.length < 3) {
-    const error = 'Username must be at least 3 characters';
-    res.render('index', { regiserror: error, registering: true });
-  } else if (password !== cpassword) {
-    const error = 'Passwords do not match';
-    res.render('index', { regiserror: error, registering: true });
-  } else if (password.length < 8) {
-    const error = 'Password must be at least 8 characters';
-    res.render('index', { regiserror: error, registering: true });
-  } else if (credentials.getAllUsers().some((user) => user.username === username)) {
-    const error = `Username: ${username} already exists`;
-    res.render('index', { regiserror: error, registering: true });
-  } else {
-    credentials.addUser({ username, password: secret });
-    credentials.saveUsersToFile(usersFilePath);
+    if (!username || !password || !cpassword) {
+      const error = 'All fields are required';
+      return res.render('index', { regiserror: error, registering: true });
+    } else if (username.length < 3) {
+      const error = 'Username must be at least 3 characters';
+      return res.render('index', { regiserror: error, registering: true });
+    } else if (password !== cpassword) {
+      const error = 'Passwords do not match';
+      return res.render('index', { regiserror: error, registering: true });
+    } else if (password.length < 8) {
+      const error = 'Password must be at least 8 characters';
+      return res.render('index', { regiserror: error, registering: true });
+    }
+
+    // Check if username exists
+    const existingUser = await credentials.findByUsername(username);
+    if (existingUser) {
+      const error = `Username: ${username} already exists`;
+      return res.render('index', { regiserror: error, registering: true });
+    }
+
+    // Create new user with username as the default name
+    await credentials.addUser({
+      username,
+      password: secret,
+      name: username // Set name to username by default
+    });
     res.redirect('/login');
+  } catch (error) {
+    console.error('Registration error:', error);
+    res.render('index', { regiserror: 'An error occurred during registration', registering: true });
   }
 };
 
 // Handle login
-exports.login = (req, res) => {
-  const { username, password } = req.body;
-  const secret = util.encrypt(password);
+exports.login = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const secret = util.encrypt(password);
 
-  const user = credentials.getAllUsers().find(
-    (user) => user.username === username && user.password === secret
-  );
+    // Find user by username
+    const user = await credentials.findByUsername(username);
 
-  if (user) {
-    req.session.user = username;
-    console.log(`${username} has logged in`);
-    res.redirect('/');
-  } else {
-    const error = `Invalid credentials`;
-    res.render('index', { loginerror: error, registering: null, logining: true });
+    if (user && user.password === secret) {
+      req.session.user = username;
+      console.log(`${username} has logged in`);
+      res.redirect('/');
+    } else {
+      const error = `Invalid credentials`;
+      res.render('index', { loginerror: error, registering: null, logining: true });
+    }
+  } catch (error) {
+    console.error('Login error:', error);
+    res.render('index', { loginerror: 'An error occurred during login', registering: null, logining: true });
   }
 };
 
