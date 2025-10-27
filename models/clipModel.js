@@ -1,14 +1,18 @@
 const mongoose = require('mongoose');
+const generateUniqueID = require('../utils/idGenerator');
 
 // Define the Clip Schema
 const clipSchema = new mongoose.Schema({
-  ID: { type: Number, required: true },
+  ID: { type: Number, required: true, unique: true, index: true },
   title: { type: String, required: true },
   description: { type: String, required: true },
   username: { type: String, required: true },
   time: { type: String },
   createdAt: { type: Date, default: Date.now }
 });
+
+// Create index for ID field
+clipSchema.index({ ID: 1 });
 
 // Create the Clip model
 const ClipModel = mongoose.model('Clip', clipSchema);
@@ -17,7 +21,15 @@ class Clip {
   // Add a new Clip
   async addClip(clip) {
     try {
-      const newClip = new ClipModel(clip);
+      // Generate a unique ID using the model
+      const newID = await generateUniqueID(ClipModel);
+      
+      // Create new clip with the generated ID
+      const newClip = new ClipModel({
+        ...clip,
+        ID: newID
+      });
+      
       await newClip.save();
       return newClip;
     } catch (error) {
@@ -25,34 +37,58 @@ class Clip {
     }
   }
 
-  // Get all Clips
-  async getAllClips() {
+  // Get single clip by ID
+  async getClipByID(clipID) {
     try {
-      return await ClipModel.find().sort({ title: 1 });
+      return await ClipModel.findOne({ ID: clipID })
+        .select('ID title username time description')
+        .lean();
     } catch (error) {
       throw error;
     }
   }
 
-  // Get Clips for a specific user
-  async getUserClips(username) {
+  // Get all Clips with pagination
+  async getAllClips(page = 1, limit = 50) {
     try {
-      return await ClipModel.find({ username }).sort({ title: 1 });
+      return await ClipModel.find()
+        .select('ID title username time description') // เพิ่ม description กลับมา
+        .sort({ title: 1 })
+        .lean(); // ใช้ lean() เพื่อคืนค่าเป็น plain JavaScript objects
     } catch (error) {
       throw error;
     }
   }
 
-  // Search Clips by name and user
-  async searchClipboardByName(name, user) {
+  // Get Clips for a specific user with pagination
+  async getUserClips(username, page = 1, limit = 50) {
+    try {
+      return await ClipModel.find({ username })
+        .select('ID title username time description')
+        .sort({ title: 1 })
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .lean();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // Search Clips by name and user with pagination
+  async searchClipboardByName(name, user, page = 1, limit = 50) {
     try {
       if (!user) return [];
-      if (!name) return await this.getUserClips(user);
+      if (!name) return await this.getUserClips(user, page, limit);
 
       return await ClipModel.find({
         title: { $regex: name, $options: 'i' },
         username: user
-      }).sort({ title: 1 });
+      })
+        .select('ID title username time description')
+        .sort({ title: 1 })
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .lean();
     } catch (error) {
       throw error;
     }

@@ -22,7 +22,6 @@ exports.getPage = async (req, res) => {
 exports.addClipboard = async (req, res) => {
   try {
     const clipboard = {
-      ID: Math.floor(Math.random() * 9000) + 1000, // 4-digit ID like before
       time: res.locals.currentDate || "NULL",
       username: req.session.user || "Anonymous",
       title: req.body.title || req.body.clipboard?.substring(0, 20),
@@ -47,8 +46,7 @@ exports.addClipboard = async (req, res) => {
 exports.retrieveClipboard = async (req, res) => {
   try {
     const clipID = parseInt(req.body.retrieveID);
-    const allClips = await clipModel.getAllClips();
-    const clip = allClips.find(clip => clip.ID === clipID);
+    const clip = await clipModel.getClipByID(clipID);
     
     if (!clip) return res.render('index', { clipnotfound: "NO CLIPBOARD FOUND!!" });
 
@@ -78,8 +76,7 @@ exports.updateClipboard = async (req, res) => {
       return res.render('index', { clipnotfound: "Clipboard content is too long" });
     }
 
-    const allClips = await clipModel.getAllClips();
-    const clip = allClips.find(clip => clip.ID === clipID);
+    const clip = await clipModel.getClipByID(clipID);
     
     if (!clip) {
       return res.render('index', { clipnotfound: "NO CLIPBOARD FOUND!!" });
@@ -92,13 +89,13 @@ exports.updateClipboard = async (req, res) => {
     // Update the clip in MongoDB
     clip.description = newClip;
     clip.title = newTitle;
-    await clipModel.updateClip(clip._id, { title: newTitle, description: newClip });
+    await clipModel.updateClip(clipID, { title: newTitle, description: newClip });
     
     const userclip = await clipModel.getUserClips(req.session.user);
     res.render('index', { 
       clipout: newClip, 
       cliptitle: newTitle, 
-      clipcurrentid: clip._id, 
+      clipcurrentid: clipID, 
       userclip: userclip, 
       clipuname: clip.username 
     });
@@ -117,25 +114,17 @@ exports.deleteClipboard = async (req, res) => {
     }
 
     const idsToDelete = Array.isArray(deleteIDs) ? deleteIDs.map(id => parseInt(id)) : [parseInt(deleteIDs)];
-    const allClips = await clipModel.getAllClips();
     
-    const unauthorized = idsToDelete.some((id) => {
-      const clip = allClips.find((clip) => clip.ID === id);
-      return !clip || req.session.user !== clip.username;
-    });
-
-    if (unauthorized) {
-      const userClips = req.session.user ? await clipModel.getUserClips(req.session.user) : undefined;
-      return res.render('index', { clipnotfound: "You are not the owner of one or more selected clipboards", userclip: userClips });
-    }
-
-    // Delete all clips in parallel
-    await Promise.all(idsToDelete.map(async (id) => {
-      const clip = allClips.find((clip) => clip.ID === id);
-      if (clip) {
-        await clipModel.deleteClip(clip.ID);
+    // ตรวจสอบการอนุญาตและลบ clip ทีละอัน
+    for (const id of idsToDelete) {
+      const clip = await clipModel.getClipByID(id);
+      if (!clip || clip.username !== req.session.user) {
+        const userClips = req.session.user ? await clipModel.getUserClips(req.session.user) : undefined;
+        return res.render('index', { clipnotfound: "You are not the owner of one or more selected clipboards", userclip: userClips });
       }
-    }));
+      // ลบ clip ที่ผ่านการตรวจสอบแล้ว
+      await clipModel.deleteClip(id);
+    }
 
     const userClips = req.session.user ? await clipModel.getUserClips(req.session.user) : undefined;
     res.render('index', { userclip: userClips });
