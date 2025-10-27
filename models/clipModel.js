@@ -11,9 +11,6 @@ const clipSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
-// Create index for ID field
-clipSchema.index({ ID: 1 });
-
 // Create the Clip model
 const ClipModel = mongoose.model('Clip', clipSchema);
 
