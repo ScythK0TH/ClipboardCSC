@@ -2,7 +2,7 @@
   position: absolute;
   max-width: 60vh;
   max-height: 100vh;
-  width: 90%; /* Adjusted for responsiveness */
+  width: 70%; /* Adjusted for responsiveness */
   height: auto; /* Allow height to adjust dynamically */
   background: rgba(185, 185, 185, 0.507); /* Semi-transparent background */
   border-radius: 10px;
