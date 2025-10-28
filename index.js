@@ -33,11 +33,15 @@ app.use(
 app.use((req, res, next) => {
   const now = new Date();
   res.locals.user = req.session.user || null;
-  res.locals.currentDate = now.toLocaleString('en-GB', {
+  // Provide an ISO timestamp for clients to format to their local timezone
+  res.locals.currentDateISO = now.toISOString();
+  // Keep a server-side Bangkok-formatted fallback string for compatibility
+  res.locals.currentDateBangkok = now.toLocaleString('en-GB', {
     timeZone: 'Asia/Bangkok',
     hour: '2-digit',
     minute: '2-digit',
     second: '2-digit',
+    hour12: false,
     day: '2-digit',
     month: '2-digit',
     year: 'numeric'

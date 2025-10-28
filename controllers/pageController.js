@@ -22,7 +22,8 @@ exports.getPage = async (req, res) => {
 exports.addClipboard = async (req, res) => {
   try {
     const clipboard = {
-      time: res.locals.currentDate || "NULL",
+      // Prefer ISO timestamp (client will localize). Fall back to previous formatted string if present.
+      time: res.locals.currentDateISO || res.locals.currentDateBangkok || "NULL",
       username: req.session.user || "Anonymous",
       title: req.body.title || req.body.clipboard?.substring(0, 20),
       description: req.body.clipboard || "No description"

@@ -463,7 +463,9 @@
                   </div>
                   <div class="text-theme clipcell"><%= clip.ID %></div>
                   <div class="text-theme clipcell"><%= clip.title %></div>
-                  <div class="text-theme clipcell"><%= clip.time %></div>
+                  <div class="text-theme clipcell" data-time="<%= clip.time %>">
+                    <span class="time-text"><%= clip.time %></span>
+                  </div>
                 </div>
               <% }); %>
             <% } else { %>
@@ -715,5 +717,47 @@
         window.location.href = "/register"; // Navigate to /register
     });
     <% } %>
+  </script>
+  <script>
+    // Format any elements that have a data-time attribute into the client's timezone and locale.
+    (function formatClipTimes() {
+      try {
+        const clientTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const locale = navigator.language || 'en-GB';
+        const opts = {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour12: false
+        };
+
+        document.querySelectorAll('[data-time]').forEach((el) => {
+          const raw = el.getAttribute('data-time');
+          const span = el.querySelector('.time-text');
+          if (!raw || !span) return;
+
+          // Try to parse as ISO/standard date first
+          const parsed = Date.parse(raw);
+          if (!isNaN(parsed)) {
+            const date = new Date(parsed);
+            try {
+              span.textContent = new Intl.DateTimeFormat(locale, { ...opts, timeZone: clientTZ }).format(date);
+            } catch (e) {
+              // If Intl with timezone fails for some environment, use toLocaleString fallback
+              span.textContent = date.toLocaleString(locale);
+            }
+          } else {
+            // Could not parse (probably already localized server string) - keep as-is
+            span.textContent = raw;
+          }
+        });
+      } catch (e) {
+        // Silent fail: leave displayed strings as they are
+        console.error('Error formatting times:', e);
+      }
+    })();
   </script>
 </html>
