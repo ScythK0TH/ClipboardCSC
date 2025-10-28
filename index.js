@@ -31,8 +31,10 @@ app.use(
 
 // Pass session data to EJS (for every request)
 app.use((req, res, next) => {
+  const now = new Date();
   res.locals.user = req.session.user || null;
-  res.locals.currentDate = new Date().toLocaleString('th-TH', {
+  res.locals.currentDate = now.toLocaleString('en-GB', {
+    timeZone: 'Asia/Bangkok',
     hour: '2-digit',
     minute: '2-digit',
     second: '2-digit',
